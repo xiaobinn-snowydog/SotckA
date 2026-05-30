@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>雪球股票投资24课 · 闯关学习</title>
+  <link rel="stylesheet" href="snowball.css?v=12">
+</head>
+<body>
+  <div id="app">
+
+    <!-- 顶部状态栏 -->
+    <header id="header">
+      <div class="header-left">
+        <button id="menu-toggle" onclick="App.toggleSidebar()" aria-label="菜单">☰</button>
+        <span class="logo-icon">📈</span>
+        <span class="logo-text">雪球投资24课</span>
+      </div>
+      <div class="header-center">
+        <div class="progress-wrap">
+          <div class="progress-label">总进度</div>
+          <div class="progress-track">
+            <div class="progress-fill" id="total-progress-fill"></div>
+          </div>
+          <div class="progress-text" id="total-progress-text">0/24</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="xp-badge">
+          <span class="xp-icon">⭐</span>
+          <span class="xp-value" id="xp-display">0</span>
+          <span class="xp-label">经验值</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 主体布局 -->
+    <div id="main-layout">
+
+      <!-- 左侧章节导航 -->
+      <nav id="sidebar">
+        <div id="sidebar-sections"></div>
+      </nav>
+
+      <!-- 中间主内容区 -->
+      <main id="content">
+        <!-- 首页欢迎屏 -->
+        <div id="welcome-screen">
+          <div class="welcome-hero">
+            <div class="welcome-emoji">🎓</div>
+            <h1>成为A股小行家</h1>
+            <p>24关 × 费曼学习法 × 游戏闯关</p>
+            <p class="welcome-sub">用初中生都能懂的语言，搞懂股票投资的底层逻辑。</p>
+            <button class="btn-primary start-btn" onclick="App.navigate(1)">开始第1关 →</button>
+          </div>
+          <div class="welcome-stats">
+            <div class="stat-card">
+              <div class="stat-num">5</div>
+              <div class="stat-label">大篇章</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">26</div>
+              <div class="stat-label">闯关章节</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">92</div>
+              <div class="stat-label">测试题目</div>
+            </div>
+          </div>
+          <div class="welcome-sections">
+            <div class="section-preview macro">
+              <span class="sp-icon">🌍</span>
+              <span class="sp-title">宏观篇</span>
+              <span class="sp-desc">认识A股本质</span>
+            </div>
+            <div class="section-preview meso">
+              <span class="sp-icon">🏭</span>
+              <span class="sp-title">中观篇</span>
+              <span class="sp-desc">判断行业周期</span>
+            </div>
+            <div class="section-preview micro">
+              <span class="sp-icon">🔬</span>
+              <span class="sp-title">微观篇</span>
+              <span class="sp-desc">如何分析个股</span>
+            </div>
+            <div class="section-preview ops">
+              <span class="sp-icon">⚔️</span>
+              <span class="sp-title">实操篇</span>
+              <span class="sp-desc">交易策略技巧</span>
+            </div>
+            <div class="section-preview psych">
+              <span class="sp-icon">🧠</span>
+              <span class="sp-title">心理篇</span>
+              <span class="sp-desc">战胜人性弱点</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 章节内容画板（JS动态渲染） -->
+        <div id="chapter-board" class="hidden"></div>
+      </main>
+
+      <!-- 右侧本章目录 -->
+      <aside id="outline">
+        <div class="outline-header">本章目录</div>
+        <div id="outline-list"></div>
+      </aside>
+
+    </div>
+
+    <!-- 解锁弹窗 -->
+    <div id="unlock-modal" class="modal hidden">
+      <div class="modal-box">
+        <div class="unlock-anim" id="unlock-anim-content"></div>
+        <h2 id="unlock-title"></h2>
+        <p id="unlock-desc"></p>
+        <button class="btn-primary" id="unlock-next-btn">继续下一关 →</button>
+      </div>
+    </div>
+
+    <!-- 遮罩层 -->
+    <div id="overlay" class="hidden" onclick="App.closeModal()"></div>
+
+  </div>
+
+  <script src="snowball-data.js?v=20"></script>
+  <script src="snowball-app.js?v=21"></script>
+</body>
+</html>
