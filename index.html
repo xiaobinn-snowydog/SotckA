@@ -111,6 +111,12 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
   padding:16px;margin-top:16px}
 .sbox p{font-size:14px;color:#E2DACB;line-height:1.85}
 .sbox p strong{color:var(--gold)}
+.ask-q{font-size:14.5px;color:var(--text);margin-top:18px;margin-bottom:10px;line-height:1.7;font-weight:600}
+.ask-input{width:100%;background:rgba(255,255,255,.035);border:1.5px solid var(--line);border-radius:14px;
+  padding:13px 14px;color:var(--text);font-size:15px;font-family:inherit;line-height:1.7;outline:none;resize:vertical;
+  transition:border-color .2s var(--ease)}
+.ask-input:focus{border-color:var(--gold)}
+.ask-input::placeholder{color:var(--muted)}
 
 /* chart container */
 .cht-wrap{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:6px}
@@ -454,7 +460,7 @@ function mkMatrix({cells,rowLabel,colLabel}){
 }
 </script>
 
-<script src="course-data.js?v=14"></script>
+<script src="course-data.js?v=15"></script>
 
 <script>
 // ══════════════════════════════════════════════
@@ -565,11 +571,15 @@ function renderStep(ch,n){
     sa.innerHTML=`<button class="sbtn bc" onclick="nextStep()">这有啥说法？→</button>`;
   }
   else if(st.t==='prob'){
+    const hasAsk=!!ch.ask;
     sc.innerHTML=`<div class="scard">
       <span class="stag prob">🤔 想一想</span>
-      <div class="sttl" style="font-size:21px;text-align:center;padding:14px 0">${ch.prob}</div>
+      <div class="sttl" style="font-size:${hasAsk?'19px':'21px'};text-align:center;padding:${hasAsk?'10px 0 4px':'14px 0'};line-height:1.6">${ch.prob}</div>
+      ${hasAsk?`<div class="ask-q">${ch.ask}</div>
+      <textarea id="ask-input" class="ask-input" rows="3" placeholder="写下你的例子……（只给自己看，写出来才记得牢）"></textarea>`:''}
     </div>`;
-    sa.innerHTML=`<button class="sbtn bg" onclick="nextStep()">我想知道答案 →</button>`;
+    sa.innerHTML=`<button class="sbtn bg" onclick="${hasAsk?'saveAsk();':''}nextStep()">${hasAsk?'写好了，看答案 →':'我想知道答案 →'}</button>`;
+    if(hasAsk){ const v=loadAsk(S.cur); if(v) document.getElementById('ask-input').value=v; }
   }
   else if(st.t==='conc'){
     sc.innerHTML=`<div class="scard">
@@ -645,6 +655,9 @@ function nextStep(){
   const ch=CHAPTERS.find(c=>c.id===S.cur);
   renderStep(ch,S.step+1);
 }
+function askKey(id){return 'azhul_ask_'+id;}
+function saveAsk(){try{const el=document.getElementById('ask-input');if(el)localStorage.setItem(askKey(S.cur),el.value);}catch(e){}}
+function loadAsk(id){try{return localStorage.getItem(askKey(id))||'';}catch(e){return '';}}
 function checkAns(chosen){
   if(S.answered) return;
   S.answered=true;
