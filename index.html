@@ -485,7 +485,7 @@ function mkMatrix({cells,rowLabel,colLabel}){
 }
 </script>
 
-<script src="course-data.js?v=22"></script>
+<script src="course-data.js?v=24"></script>
 
 <script>
 // ══════════════════════════════════════════════
@@ -740,7 +740,9 @@ function unlockNext(){
 // 可拖动探索（图自己会讲课）
 // ══════════════════════════════════════════════
 function exploreHTML(chart){
-  return `<div class="cht-ttl">${chart.ttl}</div>
+  const k=chart.explore;
+  let body='';
+  if(k==='compound') body=`
     <div class="exp-readout">
       <div class="exp-ro"><b id="exp-base" class="base">36万</b><span>你投入的本金</span></div>
       <div class="exp-ro"><b id="exp-gold" class="gold">150万</b><span>滚成的本息</span></div>
@@ -751,8 +753,87 @@ function exploreHTML(chart){
         <input type="range" id="exp-rate" min="4" max="12" step="0.5" value="8" oninput="drawCompound()"></div>
       <div class="exp-ctrl"><div class="exp-row"><span>坚持的年数</span><span class="exp-val" id="exp-vy">30 年</span></div>
         <input type="range" id="exp-year" min="10" max="40" step="1" value="30" oninput="drawCompound()"></div>
+    </div>`;
+  else if(k==='drawdown') body=`
+    <div class="exp-readout">
+      <div class="exp-ro"><b id="dd-drop" class="base">跌50%</b><span>这一次亏了</span></div>
+      <div class="exp-ro"><b id="dd-rec" class="gold">+100%</b><span>才能涨回本</span></div>
     </div>
+    <svg class="exp-graph" id="dd-graph" viewBox="0 0 320 140"></svg>
+    <div class="exp-ctrls">
+      <div class="exp-ctrl"><div class="exp-row"><span>这一次跌了多少</span><span class="exp-val" id="dd-v">50%</span></div>
+        <input type="range" id="dd-rate" min="10" max="80" step="5" value="50" oninput="drawDrawdown()"></div>
+    </div>`;
+  else if(k==='pe') body=`
+    <div class="exp-readout">
+      <div class="exp-ro"><b id="pe-v2" class="base">10倍</b><span>市盈率</span></div>
+      <div class="exp-ro"><b id="pe-yr" class="gold">约10年</b><span>才回本</span></div>
+    </div>
+    <svg class="exp-graph" id="pe-graph" viewBox="0 0 320 110"></svg>
+    <div class="exp-ctrls">
+      <div class="exp-ctrl"><div class="exp-row"><span>市盈率（PE）</span><span class="exp-val" id="pe-v">10倍</span></div>
+        <input type="range" id="pe-rate" min="5" max="60" step="1" value="10" oninput="drawPE()"></div>
+    </div>`;
+  else if(k==='flood') body=`
+    <svg class="exp-graph" id="fl-graph" viewBox="0 0 320 140"></svg>
+    <div class="exp-ctrls">
+      <div class="exp-ctrl"><div class="exp-row"><span>央行放水的力度</span><span class="exp-val" id="fl-v">中</span></div>
+        <input type="range" id="fl-rate" min="0" max="100" step="5" value="40" oninput="drawFlood()"></div>
+    </div>`;
+  return `<div class="cht-ttl">${chart.ttl}</div>${body}
     ${chart.note?`<div class="cht-note">${chart.note}</div>`:''}`;
+}
+function initExplore(k){
+  if(k==='compound') drawCompound();
+  else if(k==='drawdown') drawDrawdown();
+  else if(k==='pe') drawPE();
+  else if(k==='flood') drawFlood();
+}
+function drawDrawdown(){
+  const d=+document.getElementById('dd-rate').value, rec=Math.round(d/(100-d)*100);
+  document.getElementById('dd-v').textContent=d+'%';
+  document.getElementById('dd-drop').textContent='跌'+d+'%';
+  document.getElementById('dd-rec').textContent='+'+rec+'%';
+  document.getElementById('dd-rate').style.setProperty('--fill',((d-10)/70*100)+'%');
+  const base=116,maxH=92,sc=v=>Math.min(v,400)/400*maxH;
+  const dh=sc(d),rh=sc(rec);
+  document.getElementById('dd-graph').innerHTML=`
+    <text x="86" y="16" font-size="11" fill="#9C968C" text-anchor="middle">这次跌幅</text>
+    <text x="234" y="16" font-size="11" fill="#9C968C" text-anchor="middle">要涨多少才回本</text>
+    <rect x="56" y="${base-dh}" width="60" height="${dh}" rx="5" fill="#C98B6B"/>
+    <text x="86" y="${base-dh-6}" font-size="13" fill="#e0a98c" text-anchor="middle" font-weight="700">${d}%</text>
+    <rect x="204" y="${base-rh}" width="60" height="${rh}" rx="5" fill="#E9A949"/>
+    <text x="234" y="${base-rh-6}" font-size="13" fill="#E9A949" text-anchor="middle" font-weight="700">${rec}%</text>
+    <line x1="20" y1="${base}" x2="300" y2="${base}" stroke="rgba(255,255,255,.08)"/>`;
+}
+function drawPE(){
+  const pe=+document.getElementById('pe-rate').value;
+  document.getElementById('pe-v').textContent=pe+'倍';
+  document.getElementById('pe-v2').textContent=pe+'倍';
+  document.getElementById('pe-yr').textContent='约'+pe+'年';
+  document.getElementById('pe-rate').style.setProperty('--fill',((pe-5)/55*100)+'%');
+  const W=320,PL=16,PR=16,barY=44,barH=34,bw=W-PL-PR,seg=bw/pe;
+  let segs='';
+  for(let i=0;i<pe;i++){ segs+=`<rect x="${PL+i*seg}" y="${barY}" width="${Math.max(seg-1.2,0.6)}" height="${barH}" rx="2" fill="#E9A949" opacity="${(0.3+0.55*(i/pe)).toFixed(2)}"/>`; }
+  document.getElementById('pe-graph').innerHTML=`
+    <text x="${W/2}" y="28" font-size="11" fill="#9C968C" text-anchor="middle">买入价 = ${pe} 年的利润（每格 = 1 年）</text>
+    ${segs}
+    <text x="${W/2}" y="${barY+barH+22}" font-size="11.5" fill="#D7D1C7" text-anchor="middle">市盈率越高，要等越久、越赌它将来不掉队</text>`;
+}
+function drawFlood(){
+  const w=+document.getElementById('fl-rate').value;
+  document.getElementById('fl-v').textContent=w<33?'小':w<66?'中':'大';
+  document.getElementById('fl-rate').style.setProperty('--fill',w+'%');
+  const asset=Math.round(w*1.0), wage=Math.round(w*0.2);
+  const base=116,maxH=92,sc=v=>v/100*maxH;
+  document.getElementById('fl-graph').innerHTML=`
+    <text x="86" y="16" font-size="11" fill="#9C968C" text-anchor="middle">房子·股票</text>
+    <text x="234" y="16" font-size="11" fill="#9C968C" text-anchor="middle">普通人工资</text>
+    <rect x="56" y="${base-sc(asset)}" width="60" height="${sc(asset)}" rx="5" fill="#E9A949"/>
+    <text x="86" y="${base-sc(asset)-6}" font-size="13" fill="#E9A949" text-anchor="middle" font-weight="700">+${asset}%</text>
+    <rect x="204" y="${base-sc(wage)}" width="60" height="${Math.max(sc(wage),1)}" rx="5" fill="#7C8A93"/>
+    <text x="234" y="${base-sc(wage)-6}" font-size="13" fill="#aab4bb" text-anchor="middle" font-weight="700">+${wage}%</text>
+    <line x1="20" y1="${base}" x2="300" y2="${base}" stroke="rgba(255,255,255,.08)"/>`;
 }
 function initExplore(kind){ if(kind==='compound') drawCompound(); }
 function drawCompound(){
