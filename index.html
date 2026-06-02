@@ -51,29 +51,39 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
 .map-ttl{text-align:center;padding:22px 0 8px;font-size:25px;font-weight:750;color:var(--gold);letter-spacing:.5px}
 .map-sub{text-align:center;color:var(--text);font-size:13.5px;margin-bottom:6px;opacity:.85}
 .map-tip{text-align:center;color:var(--muted);font-size:11.5px;margin-bottom:26px;letter-spacing:.3px}
-.sec-block{margin-bottom:30px}
-.sec-head{display:flex;align-items:center;gap:9px;padding:0 2px 12px}
-.sec-em{font-size:18px;opacity:.9}
-.sec-name{font-size:15.5px;font-weight:700;letter-spacing:.2px}
-.sec-dot{width:7px;height:7px;border-radius:50%;flex:none}
-.sec-sub{font-size:11px;color:var(--muted);margin-left:auto;letter-spacing:.3px}
-.sec-bar{height:3px;border-radius:3px;background:var(--locked);margin:0 2px 14px;overflow:hidden}
-.sec-bar-f{height:100%;border-radius:3px;transition:width .7s var(--ease)}
-.ch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
-.ch-tile{background:var(--card);border-radius:16px;padding:12px 6px;
-  display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;
-  border:1px solid var(--line);transition:transform .2s var(--ease),border-color .2s;min-height:92px;justify-content:center}
-.ch-tile.on:active{transform:scale(.94)}
-.ch-tile.on{border-color:rgba(233,169,73,.45);box-shadow:0 4px 18px -10px var(--gold)}
-.ch-tile.lk{background:rgba(255,255,255,.02);cursor:default;border-color:transparent}
-.ch-tile.lk .ch-em svg{stroke:var(--muted);opacity:.5}
-.ch-tile.dn{border-color:rgba(127,181,138,.5)}
-.ch-em{font-size:25px;line-height:1;height:28px;display:grid;place-items:center}
-.ch-em svg{width:20px;height:20px;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.ch-no{font-size:9px;color:var(--muted);letter-spacing:.3px}
-.ch-lb{font-size:10px;font-weight:500;text-align:center;line-height:1.3;color:var(--text);opacity:.9}
-.ch-tile.lk .ch-lb{color:var(--muted);opacity:.5}
-.soon{grid-column:1/-1;text-align:center;color:var(--muted);font-size:12px;
+/* 闯关路径 */
+.path-sec{display:flex;align-items:center;gap:10px;margin:30px 4px 20px;
+  padding-top:6px;border-top:1px solid var(--line)}
+.path-sec:first-child{border-top:none;margin-top:6px}
+.path-sec-dot{width:9px;height:9px;border-radius:50%;flex:none}
+.path-sec-name{font-size:16px;font-weight:700;letter-spacing:.2px}
+.path-sec-cnt{margin-left:auto;font-size:12px;color:var(--muted);letter-spacing:.3px}
+.node-row{display:flex;justify-content:center;margin:0 0 20px;position:relative}
+.node-row::before{content:'';position:absolute;left:50%;top:-22px;height:46px;width:2px;
+  transform:translateX(-1px);z-index:0;
+  background:repeating-linear-gradient(180deg,var(--line) 0 5px,transparent 5px 12px)}
+.node-pos{display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
+.node{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;cursor:pointer;
+  background:var(--card);border:1px solid var(--line);transition:transform .18s var(--ease)}
+.node:active{transform:scale(.9)}
+.node-emoji{font-size:30px;line-height:1}
+.node.lk{background:rgba(255,255,255,.02);cursor:default;border-color:transparent}
+.node.lk svg{stroke:var(--muted);opacity:.45}
+.node svg{width:24px;height:24px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.node.dn{border-color:rgba(127,181,138,.55);background:rgba(127,181,138,.08)}
+.node.cur{border:2px solid var(--gold);box-shadow:0 0 0 6px rgba(233,169,73,.12),0 8px 24px -8px var(--gold);
+  animation:nodePulse 2.4s var(--ease) infinite}
+@keyframes nodePulse{0%,100%{box-shadow:0 0 0 6px rgba(233,169,73,.12),0 8px 24px -8px var(--gold)}
+  50%{box-shadow:0 0 0 11px rgba(233,169,73,.05),0 8px 24px -8px var(--gold)}}
+.node-flag{position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+  background:var(--gold);color:#231c0c;font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;
+  white-space:nowrap;letter-spacing:.5px;z-index:2}
+.node-flag::after{content:'';position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);
+  border:4px solid transparent;border-top-color:var(--gold);border-bottom:0}
+.node-lb{font-size:11px;font-weight:500;text-align:center;line-height:1.35;margin-top:8px;
+  max-width:120px;color:var(--text);opacity:.9}
+.node-lb.lk{color:var(--muted);opacity:.45}
+.soon{text-align:center;color:var(--muted);font-size:12px;
   padding:18px;background:var(--card);border-radius:16px;border:1px dashed var(--line)}
 
 /* progress bar */
@@ -122,6 +132,21 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
 .cht-wrap{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:6px}
 .cht-ttl{font-size:13px;color:#D7D1C7;font-weight:600;margin-bottom:12px;text-align:center;line-height:1.5}
 .cht-note{font-size:11px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6}
+/* 可拖动探索 */
+.exp-readout{display:flex;justify-content:center;gap:24px;margin:8px 0 10px;align-items:baseline}
+.exp-ro{text-align:center}
+.exp-ro b{font-size:24px;font-weight:750;transition:color .2s}
+.exp-ro b.gold{color:var(--gold)} .exp-ro b.base{color:#8b97a0;font-size:17px}
+.exp-ro span{display:block;font-size:11px;color:var(--muted);margin-top:1px}
+.exp-graph{width:100%;display:block;overflow:visible}
+.exp-ctrls{margin-top:16px;display:flex;flex-direction:column;gap:15px}
+.exp-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;font-size:13.5px;color:#D7D1C7}
+.exp-val{color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums}
+.exp-ctrls input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:99px;cursor:pointer;
+  background:linear-gradient(var(--gold),var(--gold)) no-repeat,rgba(255,255,255,.1);background-size:var(--fill,40%) 100%;outline:none}
+.exp-ctrls input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;
+  background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.45),0 0 0 6px rgba(233,169,73,.16);transition:transform .15s var(--ease)}
+.exp-ctrls input[type=range]:active::-webkit-slider-thumb{transform:scale(1.12)}
 
 /* action buttons：统一暖琥珀、有按压感 */
 .sbtn{width:100%;padding:16px;border-radius:16px;border:none;
@@ -237,17 +262,17 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
 
 <!-- TOOLBOX -->
 <div id="view-tool" class="view hidden">
-  <div class="hdr"><span style="color:var(--gold);font-size:18px;font-weight:800">🧮 复利计算器</span></div>
+  <div class="hdr"><span style="color:var(--gold);font-size:18px;font-weight:800">复利计算器</span></div>
   <div id="tool-wrap">
     <div class="intro"><span class="intro-em">⛄</span>
       <strong style="display:block;margin-bottom:6px;font-size:15px">定投复利：滚雪球</strong>
       <p style="font-size:13px;color:var(--muted);line-height:1.7">每个月坚持投一笔钱，让时间和复利帮你滚雪球。算算看，多年后你能攒下多少。</p>
     </div>
-    <div class="fgrp"><label class="flbl">💰 每月投入（元）</label>
+    <div class="fgrp"><label class="flbl">每月投入（元）</label>
       <input class="finp" type="number" id="iv-m" value="1000"></div>
-    <div class="fgrp"><label class="flbl">📈 预期年化收益（%）</label>
+    <div class="fgrp"><label class="flbl">预期年化收益（%）</label>
       <input class="finp" type="number" id="iv-r" value="8" step="0.5"></div>
-    <div class="fgrp"><label class="flbl">📆 坚持年数</label>
+    <div class="fgrp"><label class="flbl">坚持年数</label>
       <input class="finp" type="number" id="iv-y" value="20" min="1" max="50"></div>
     <button class="cbtn" onclick="calcInvest()">算算雪球有多大 →</button>
     <div id="iv-res" class="hidden"></div>
@@ -258,7 +283,7 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
 
 <!-- PROGRESS -->
 <div id="view-progress" class="view hidden">
-  <div class="hdr"><span style="color:var(--gold);font-size:18px;font-weight:800">📊 我的进度</span></div>
+  <div class="hdr"><span style="color:var(--gold);font-size:18px;font-weight:800">我的进度</span></div>
   <div id="prog-wrap"></div>
 </div>
 
@@ -460,7 +485,7 @@ function mkMatrix({cells,rowLabel,colLabel}){
 }
 </script>
 
-<script src="course-data.js?v=21"></script>
+<script src="course-data.js?v=22"></script>
 
 <script>
 // ══════════════════════════════════════════════
@@ -492,38 +517,38 @@ function showView(name){
 // ══════════════════════════════════════════════
 function renderMap(){
   const wrap=document.getElementById('sec-list');
-  wrap.innerHTML=SECTIONS.map(sec=>{
+  const lockSvg='<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2.2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+  const doneSvg='<svg viewBox="0 0 24 24" style="stroke:var(--green)"><path d="M5 13l4 4L19 7"/></svg>';
+  const wave=[0,34,0,-34];
+  let html='';
+  SECTIONS.forEach(sec=>{
     const chs=CHAPTERS.filter(c=>c.sec===sec.id);
     const ready=chs.filter(c=>c.conc);
     const doneN=chs.filter(c=>S.completed.includes(c.id)).length;
-    const pct=chs.length?Math.round(doneN/chs.length*100):0;
-    let tiles;
-    if(ready.length===0){
-      tiles=`<div class="soon">🔜 ${sec.name} · 敬请期待</div>`;
-    }else{
-      tiles=chs.map(ch=>{
-        const ul=S.unlocked.includes(ch.id), dn=S.completed.includes(ch.id), has=!!ch.conc;
-        const can=ul&&has;
-        const lockSvg='<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2.2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
-        const doneSvg='<svg viewBox="0 0 24 24" style="stroke:var(--green)"><path d="M5 13l4 4L19 7"/></svg>';
-        return `<div class="ch-tile ${can?'on':'lk'} ${dn?'dn':''}"
-          ${can?`onclick="openChapter(${ch.id})"`:''}>
-          <span class="ch-em">${dn?doneSvg:(can?ch.emoji:lockSvg)}</span>
-          <span class="ch-no">第${ch.id}关</span>
-          <span class="ch-lb">${ch.title}</span>
-        </div>`;
-      }).join('');
-    }
-    return `<div class="sec-block">
-      <div class="sec-head">
-        <span class="sec-dot" style="background:${sec.color}"></span>
-        <span class="sec-name">${sec.name}</span>
-        <span class="sec-sub">${sec.sub}</span>
-      </div>
-      <div class="sec-bar"><div class="sec-bar-f" style="width:${pct}%;background:${sec.color};opacity:.7"></div></div>
-      <div class="ch-grid">${tiles}</div>
+    html+=`<div class="path-sec">
+      <span class="path-sec-dot" style="background:${sec.color}"></span>
+      <span class="path-sec-name">${sec.name}</span>
+      <span class="path-sec-cnt">${ready.length?doneN+'/'+chs.length:sec.sub}</span>
     </div>`;
-  }).join('');
+    if(ready.length===0){
+      html+=`<div class="soon">🔜 ${sec.name} · 敬请期待</div>`;
+      return;
+    }
+    chs.forEach((ch,ci)=>{
+      const ul=S.unlocked.includes(ch.id), dn=S.completed.includes(ch.id), has=!!ch.conc;
+      const can=ul&&has, isNext=can&&!dn;
+      const off=wave[ci%wave.length];
+      const inner=dn?doneSvg:(can?`<span class="node-emoji">${ch.emoji}</span>`:lockSvg);
+      html+=`<div class="node-row"><div class="node-pos" style="transform:translateX(${off}px)">
+        ${isNext?'<div class="node-flag">开始</div>':''}
+        <div class="node ${can?'on':'lk'} ${dn?'dn':''} ${isNext?'cur':''}" ${can?`onclick="openChapter(${ch.id})"`:''}>
+          ${inner}
+        </div>
+        <div class="node-lb ${can?'':'lk'}">${ch.title}</div>
+      </div></div>`;
+    });
+  });
+  wrap.innerHTML=html;
 }
 
 // ══════════════════════════════════════════════
@@ -590,15 +615,24 @@ function renderStep(ch,n){
     sa.innerHTML=`<button class="sbtn bg" onclick="nextStep()">${ch.chart?'明白了，看图 →':'懂了，继续 →'}</button>`;
   }
   else if(st.t==='chart'){
-    sc.innerHTML=`<div class="scard">
-      <span class="stag cht">📊 看张图</span>
-      <div class="cht-wrap">
-        <div class="cht-ttl">${ch.chart.ttl}</div>
-        ${ch.chart.svg}
-        ${ch.chart.note?`<div class="cht-note">${ch.chart.note}</div>`:''}
-      </div>
-    </div>`;
-    sa.innerHTML=`<button class="sbtn bc" onclick="nextStep()">看懂了 →</button>`;
+    if(ch.chart.explore){
+      sc.innerHTML=`<div class="scard">
+        <span class="stag cht">🎚️ 拖一拖，自己看</span>
+        <div class="cht-wrap">${exploreHTML(ch.chart)}</div>
+      </div>`;
+      sa.innerHTML=`<button class="sbtn bc" onclick="nextStep()">看明白了 →</button>`;
+      initExplore(ch.chart.explore);
+    }else{
+      sc.innerHTML=`<div class="scard">
+        <span class="stag cht">📊 看张图</span>
+        <div class="cht-wrap">
+          <div class="cht-ttl">${ch.chart.ttl}</div>
+          ${ch.chart.svg}
+          ${ch.chart.note?`<div class="cht-note">${ch.chart.note}</div>`:''}
+        </div>
+      </div>`;
+      sa.innerHTML=`<button class="sbtn bc" onclick="nextStep()">看懂了 →</button>`;
+    }
   }
   else if(st.t==='ex'){
     sc.innerHTML=`<div class="scard">
@@ -702,6 +736,52 @@ function unlockNext(){
 // ══════════════════════════════════════════════
 // 复利计算器
 // ══════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// 可拖动探索（图自己会讲课）
+// ══════════════════════════════════════════════
+function exploreHTML(chart){
+  return `<div class="cht-ttl">${chart.ttl}</div>
+    <div class="exp-readout">
+      <div class="exp-ro"><b id="exp-base" class="base">36万</b><span>你投入的本金</span></div>
+      <div class="exp-ro"><b id="exp-gold" class="gold">150万</b><span>滚成的本息</span></div>
+    </div>
+    <svg class="exp-graph" id="exp-graph" viewBox="0 0 320 170"></svg>
+    <div class="exp-ctrls">
+      <div class="exp-ctrl"><div class="exp-row"><span>年化收益率</span><span class="exp-val" id="exp-vr">8%</span></div>
+        <input type="range" id="exp-rate" min="4" max="12" step="0.5" value="8" oninput="drawCompound()"></div>
+      <div class="exp-ctrl"><div class="exp-row"><span>坚持的年数</span><span class="exp-val" id="exp-vy">30 年</span></div>
+        <input type="range" id="exp-year" min="10" max="40" step="1" value="30" oninput="drawCompound()"></div>
+    </div>
+    ${chart.note?`<div class="cht-note">${chart.note}</div>`:''}`;
+}
+function initExplore(kind){ if(kind==='compound') drawCompound(); }
+function drawCompound(){
+  const rate=+document.getElementById('exp-rate').value, years=+document.getElementById('exp-year').value, m=1000;
+  document.getElementById('exp-vr').textContent=rate+'%';
+  document.getElementById('exp-vy').textContent=years+' 年';
+  document.getElementById('exp-rate').style.setProperty('--fill',((rate-4)/8*100)+'%');
+  document.getElementById('exp-year').style.setProperty('--fill',((years-10)/30*100)+'%');
+  const fv=(r,y)=>{const i=r/100/12,n=y*12;return {c:i>0?m*((Math.pow(1+i,n)-1)/i):m*n,p:m*n};};
+  const end=fv(rate,years);
+  document.getElementById('exp-base').textContent=fmt(end.p);
+  document.getElementById('exp-gold').textContent=fmt(end.c);
+  const W=320,H=170,PL=6,PR=10,PT=12,PB=20, x=y=>PL+(y/years)*(W-PL-PR), maxV=end.c, yp=v=>H-PB-(v/maxV)*(H-PT-PB);
+  let p=[],c=[]; for(let y=0;y<=years;y++){const f=fv(rate,y);p.push(x(y)+','+yp(f.p));c.push(x(y)+','+yp(f.c));}
+  const area=`M${c.join(' L')} L${p.slice().reverse().join(' L')} Z`;
+  const ny=Math.round(years*0.78),nf=fv(rate,ny),nx=x(ny),nyMid=(yp(nf.c)+yp(nf.p))/2;
+  document.getElementById('exp-graph').innerHTML=`
+    <defs><linearGradient id="eg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9A949" stop-opacity=".26"/><stop offset="1" stop-color="#E9A949" stop-opacity="0"/></linearGradient></defs>
+    <line x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}" stroke="rgba(255,255,255,.08)"/>
+    <path d="${area}" fill="url(#eg)"/>
+    <polyline points="${p.join(' ')}" fill="none" stroke="#7C8A93" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="${c.join(' ')}" fill="none" stroke="#E9A949" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${x(years)}" cy="${yp(end.p)}" r="3.2" fill="#7C8A93"/>
+    <circle cx="${x(years)}" cy="${yp(end.c)}" r="4.2" fill="#E9A949"/>
+    <text x="${PL}" y="${H-7}" font-size="10" fill="#9C968C" text-anchor="start">今天</text>
+    <text x="${W-PR}" y="${H-7}" font-size="10" fill="#9C968C" text-anchor="end">${years}年后</text>
+    <text x="${nx-4}" y="${nyMid+3}" font-size="10" fill="#E9A949" font-weight="600" text-anchor="end">复利多赚的 ↑</text>`;
+}
+
 function calcInvest(){
   const m=+document.getElementById('iv-m').value||0;
   const r=(+document.getElementById('iv-r').value||0)/100;
@@ -750,7 +830,7 @@ function renderProg(){
   });
   document.getElementById('prog-wrap').innerHTML=`
     <div class="pcard">
-      <div class="pttl">📚 闯关进度</div>
+      <div class="pttl">闯关进度</div>
       <div class="ppct">${pct}%</div>
       <div class="pbar-t"><div class="pbar-f" style="width:${pct}%"></div></div>
       <div class="psub">${dn} / ${tot} 关已通关</div>
