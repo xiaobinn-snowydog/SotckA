@@ -389,30 +389,30 @@ body{background:
 <!-- 穿越序幕（首次打开） -->
 <div id="prologue">
   <div class="prologue-inner">
-    <div class="prologue-year">🌇 黄昏驿站 · 账房先生初见记</div>
+    <div class="prologue-year">🌇 黄昏驿站 · 大考之年 · 账房先生考前记</div>
     <span class="prologue-ava">🧮</span>
-    <div class="prologue-line">某日睁眼，发现来到了一个叫「现代」的地方。</div>
-    <div class="prologue-line">这里有粮有药有信息，比我那时代繁华百倍。</div>
-    <div class="prologue-line">可我看见的人，大多不幸福。<br>我想了很久，才想清楚——<br><span class="prologue-hl">不是没有钱，是没有看清楚钱的规则。</span></div>
-    <button class="prologue-btn" onclick="enterStation()">入关 · 开始算账 →</button>
+    <div class="prologue-line">一闭眼，睁开，身在一个叫「现代」的地方。</div>
+    <div class="prologue-line">干了一辈子账房，这里说：无证不得从业。</div>
+    <div class="prologue-line">翻出报名表——六科，四十一道大题。<br>有些题看一眼就认出来，换了皮的古时旧账。<br>有些题完全没见过，得从头搞。<br><span class="prologue-hl">备考这件事，才知道古时的功夫，够用的只有一半。</span></div>
+    <button class="prologue-btn" onclick="enterStation()">入场备考 →</button>
   </div>
 </div>
 
 <div id="view-map" class="view">
   <div id="map-wrap">
-    <div class="map-brand">🌇 <b>黄昏驿站</b> · 钱包战场</div>
+    <div class="map-brand">🌇 <b>黄昏驿站</b> · 备考站</div>
     <div class="map-ttl">📈 从零搞懂A股</div>
-    <div class="map-sub">没人教过、但你该懂的投资课</div>
-    <div class="map-tip">大白话 · 费曼学习法 · 一关5分钟</div>
+    <div class="map-sub">账房先生穿越到现代 · 考证六科</div>
+    <div class="map-tip">六科 · 41 题 · 古今对照 · 一关 5 分钟</div>
     <div class="keeper-card">
       <div class="keeper-ava">🧮</div>
       <div>
-        <div class="keeper-name">账房先生<span class="keeper-role">驿站守站人</span></div>
+        <div class="keeper-name">账房先生<span class="keeper-role">备考中 · 资产管理科目</span></div>
         <div class="keeper-line" id="keeper-line"></div>
       </div>
     </div>
     <div id="sec-list"></div>
-    <div class="station-foot">驿站是中转，不是终点。<br>在这里把账看明白，然后继续上路。<br><span>不荐股 · 不预测 · 只教框架</span></div>
+    <div class="station-foot">驿站是大考前的落脚处。<br>把账对清楚，才能走进那个门。<br><span>不荐股 · 不预测 · 只教框架</span></div>
   </div>
 </div>
 
@@ -710,11 +710,11 @@ const SEC_PHASES={
 };
 // 守站人语录
 const KEEPER_LINES=[
-  '我不替你下注，只陪你把账算清楚。规则看懂了，路你自己走。',
-  '分期免息、先用后付？我拨一拨算盘，利滚利就藏在里面。把戏没变新，只是更难看见了。',
-  '看懂规则，比听消息值钱。今天先对一笔账。',
-  '黄昏了，停一停。看清你在哪里，再决定往哪走。',
-  '账要自己看明白，答案也得是你自己的。我只管把算盘摆正。'
+  '备考到第三篇，才知道光靠古时的算盘不够。有几道题，我没料到。',
+  '「分期免息」——我第一眼就认出来了，换皮的九出十三归。考题里正好压着这道。',
+  '这41道大题，靠古时功底能过的，大概一半。另一半，得老老实实重学。',
+  '「央行凭空造钱」那章，我想了半天才接受：这里的钱不是铜，是信用。',
+  '做了一辈子账房，以为自己懂钱。这套考题告诉我：我懂的是过去的钱，现代的钱，是另一套账。'
 ];
 function keeperGreet(){
   const el=document.getElementById('keeper-line');
@@ -843,7 +843,7 @@ function renderStep(ch,n){
 
   if(st.t==='ancient'){
     sc.innerHTML=`<div class="ancient-card">
-      <span class="stag ancient">📜 账房先生 · 初见记</span>
+      <span class="stag ancient">📜 账房先生 · 备考笔记</span>
       <div class="ancient-body">${ch.ancient}</div>
       <div class="ancient-divider"><span>古今对照</span></div>
     </div>`;
@@ -940,7 +940,7 @@ function renderStep(ch,n){
   }
   else if(st.t==='gold'){
     sc.innerHTML=`<div class="scard gold-card">
-      <span class="stag goldtag">🧮 账房先生 · 记一笔就够</span>
+      <span class="stag goldtag">📋 账房先生 · 备考要点</span>
       <div class="gold-line">${ch.gold}</div>
     </div>`;
     sa.innerHTML=`<button class="sbtn bg" onclick="unlockNext()">完成这一关 →</button>`;
