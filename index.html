@@ -298,6 +298,78 @@ body{background:
   cursor:pointer;padding:8px;letter-spacing:.3px}
 .ledger-sum{text-align:center;padding:22px 0 8px;font-size:12px;color:var(--muted);line-height:1.9}
 
+/* 完整学习账本 */
+#view-book{background:var(--bg)}
+#book-wrap{padding:0 16px 48px;max-width:480px;margin:0 auto}
+.book-print-btn{margin-left:auto;padding:8px 18px;border-radius:12px;border:none;
+  background:var(--gold);color:#231c0c;font-size:13px;font-weight:700;cursor:pointer;
+  transition:opacity .2s}
+.book-print-btn:active{opacity:.75}
+.book-cover{text-align:center;padding:36px 8px 28px}
+.book-cover-em{font-size:46px;display:block;margin-bottom:16px}
+.book-cover-title{font-size:24px;font-weight:800;color:var(--gold);letter-spacing:.3px;margin-bottom:8px}
+.book-cover-sub{font-size:13px;color:var(--muted);line-height:1.85}
+.book-cover-date{font-size:11.5px;color:var(--muted);margin-top:14px;opacity:.55}
+.book-cover-stats{display:flex;justify-content:center;gap:28px;margin-top:22px}
+.book-cover-stat span{display:block;text-align:center}
+.book-cover-stat .book-stat-n{font-size:26px;font-weight:800;color:var(--gold2)}
+.book-cover-stat .book-stat-l{font-size:11px;color:var(--muted);margin-top:2px}
+.book-divider{height:1px;background:var(--line);margin:24px 0 28px}
+.book-sec{margin-bottom:40px}
+.book-sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px;
+  padding-bottom:12px;border-bottom:1px solid var(--line)}
+.book-sec-dot{width:10px;height:10px;border-radius:50%;flex:none}
+.book-sec-name{font-size:16px;font-weight:800;color:var(--text)}
+.book-sec-phase{font-size:10.5px;color:var(--muted);margin-left:auto;letter-spacing:.5px;white-space:nowrap}
+.book-ask-ch{margin-bottom:18px}
+.book-ask-label{font-size:10.5px;color:var(--muted);margin-bottom:5px;letter-spacing:.3px;
+  display:flex;align-items:center;gap:6px}
+.book-ask-text{font-size:14px;color:#E0D8CC;line-height:1.95;padding:11px 14px;
+  background:rgba(255,255,255,.03);border-radius:10px;border-left:2px solid rgba(233,169,73,.32)}
+.book-ask-empty{font-size:13px;color:var(--muted);opacity:.38;font-style:italic;
+  padding:8px 14px;border-left:2px solid rgba(255,255,255,.06)}
+.book-principle-block{background:linear-gradient(135deg,rgba(233,169,73,.10),rgba(255,255,255,.02));
+  border:1px solid rgba(233,169,73,.30);border-radius:16px;padding:18px 16px;margin-top:6px}
+.book-principle-label{font-size:10px;color:rgba(233,169,73,.65);letter-spacing:1.8px;
+  font-weight:600;margin-bottom:9px;text-transform:uppercase}
+.book-principle-text{font-size:15px;color:var(--gold);line-height:1.9;font-weight:500}
+.book-principle-empty{font-size:13px;color:var(--muted);opacity:.4;font-style:italic;line-height:1.7}
+.book-principle-date{font-size:10.5px;color:var(--muted);margin-top:10px;opacity:.5}
+.book-summary{background:rgba(255,255,255,.03);border:1px solid var(--line);
+  border-radius:18px;padding:22px 18px;margin:28px 0}
+.book-summary-title{font-size:14px;font-weight:700;color:var(--gold);margin-bottom:16px;letter-spacing:.3px}
+.book-summary-item{display:flex;gap:12px;margin-bottom:14px;
+  padding-bottom:14px;border-bottom:1px solid var(--line)}
+.book-summary-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.book-summary-sec{font-size:11px;color:var(--muted);flex:none;width:80px;padding-top:3px;line-height:1.5}
+.book-summary-text{font-size:14px;color:#E0D8CC;line-height:1.9;
+  border-left:2.5px solid var(--gold);padding-left:12px}
+.book-keeper-close{text-align:center;padding:24px 12px 8px}
+.book-keeper-close p{font-size:14px;color:#D7D1C7;line-height:2.05;font-style:italic}
+.book-keeper-sign{font-size:12px;color:var(--muted);margin-top:14px;opacity:.7}
+.book-empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px;line-height:2.1}
+.book-gen-btn{width:100%;padding:15px;border-radius:16px;border:1px solid rgba(233,169,73,.38);
+  background:linear-gradient(135deg,rgba(233,169,73,.12),rgba(233,169,73,.06));
+  color:var(--gold);font-size:15px;font-weight:700;cursor:pointer;margin-top:18px;
+  letter-spacing:.3px;transition:background .2s var(--ease)}
+.book-gen-btn:active{background:rgba(233,169,73,.22)}
+@media print{
+  #bnav,#toast,#confetti,#prologue,.back-btn,.book-print-btn,.book-gen-btn{display:none!important}
+  .view{position:static!important;overflow:visible!important;bottom:auto!important}
+  .hidden{display:none!important}
+  #view-book{display:block!important}
+  body{background:#fff!important;color:#1a1a1a!important;-webkit-print-color-adjust:exact}
+  .book-cover-title,.book-summary-title,.book-principle-label{color:#b97a2e}
+  .book-principle-text,.book-cover-stat .book-stat-n{color:#b97a2e}
+  .book-sec-name{color:#1a1a1a}
+  .book-ask-text{background:#f9f4ec;border-left-color:#b97a2e;color:#2a2015}
+  .book-principle-block{background:#fdf6ec;border-color:rgba(185,122,46,.5)}
+  .book-summary{background:#f9f4ec;border-color:#ddd}
+  .book-summary-text{border-left-color:#b97a2e;color:#2a2015}
+  .book-keeper-close p{color:#2a2015}
+  .book-divider,.book-sec-hdr,.book-summary-item{border-color:#ddd}
+}
+
 /* toast + confetti */
 #toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-90px);
   background:var(--card);border-radius:20px;padding:10px 20px;font-size:15px;
@@ -407,6 +479,16 @@ body{background:
 <div id="view-ledger" class="view hidden">
   <div class="hdr"><span style="color:var(--gold);font-size:18px;font-weight:800">📒 我的账本</span></div>
   <div id="ledger-wrap"></div>
+</div>
+
+<!-- BOOK 完整学习账本 -->
+<div id="view-book" class="view hidden">
+  <div class="hdr">
+    <button class="back-btn" onclick="showView('ledger')">←</button>
+    <span class="hdr-title">完整学习账本</span>
+    <button class="book-print-btn" onclick="window.print()">导出 PDF</button>
+  </div>
+  <div id="book-wrap"></div>
 </div>
 
 <nav id="bnav">
@@ -665,7 +747,7 @@ function loadPrinciple(secId){
 // 导航
 // ══════════════════════════════════════════════
 function showView(name){
-  ['map','chapter','tool','progress','reflect','ledger'].forEach(v=>{
+  ['map','chapter','tool','progress','reflect','ledger','book'].forEach(v=>{
     document.getElementById('view-'+v).classList.toggle('hidden',v!==name);
   });
   ['map','tool','ledger','progress'].forEach(v=>{
@@ -675,6 +757,7 @@ function showView(name){
   if(name==='map') renderMap();
   if(name==='progress') renderProg();
   if(name==='ledger') renderLedger();
+  if(name==='book') renderBook();
   window.scrollTo(0,0);
 }
 
@@ -1249,10 +1332,118 @@ function renderLedger(){
         </div></div>`;
     }
   });
+  const hasAnyContent=writtenCount>0||CHAPTERS.some(c=>c.ask&&loadAsk(c.id));
   if(writtenCount>0){
     html+=`<div class="ledger-sum">已写 <strong style="color:var(--gold)">${writtenCount}</strong> / 6 条原则<br>
       <span style="opacity:.55">账本是用来对照自己行为的，不是用来展示的。</span></div>`;
   }
+  if(hasAnyContent){
+    html+=`<button class="book-gen-btn" onclick="showView('book')">📖 生成我的完整学习账本 →</button>`;
+  }
+  wrap.innerHTML=html;
+}
+
+// ══════════════════════════════════════════════
+// 完整学习账本
+// ══════════════════════════════════════════════
+function renderBook(){
+  const wrap=document.getElementById('book-wrap');
+  const allAskChs=CHAPTERS.filter(c=>c.ask);
+  const hasAnyAnswer=allAskChs.some(c=>loadAsk(c.id));
+  const writtenPrinciples=SECTIONS.filter(s=>loadPrinciple(s.id));
+
+  if(!hasAnyAnswer&&writtenPrinciples.length===0){
+    wrap.innerHTML=`<div class="book-empty">🧮 账本还是空的。<br>先去完成几关，把你的思考写下来，<br>才有东西装进这本账里。</div>`;
+    return;
+  }
+
+  const today=new Date();
+  const dateStr=`${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日`;
+  const completedN=S.completed.length;
+  const totalN=CHAPTERS.filter(c=>c.conc).length;
+
+  let html=`<div class="book-cover">
+    <span class="book-cover-em">📖</span>
+    <div class="book-cover-title">我的A股学习账本</div>
+    <div class="book-cover-sub">从零搞懂A股 · 黄昏驿站<br>这本账是你写的，不是课程的答案</div>
+    <div class="book-cover-stats">
+      <div class="book-cover-stat">
+        <span class="book-stat-n">${completedN}</span>
+        <span class="book-stat-l">关卡完成</span>
+      </div>
+      <div class="book-cover-stat">
+        <span class="book-stat-n">${allAskChs.filter(c=>loadAsk(c.id)).length}</span>
+        <span class="book-stat-l">条笔记</span>
+      </div>
+      <div class="book-cover-stat">
+        <span class="book-stat-n">${writtenPrinciples.length}</span>
+        <span class="book-stat-l">条原则</span>
+      </div>
+    </div>
+    <div class="book-cover-date">整理于 ${dateStr}</div>
+  </div>
+  <div class="book-divider"></div>`;
+
+  SECTIONS.forEach(sec=>{
+    const secChs=CHAPTERS.filter(c=>c.sec===sec.id);
+    const askChs=secChs.filter(c=>c.ask);
+    const principle=loadPrinciple(sec.id);
+    const hasAnswers=askChs.some(c=>loadAsk(c.id));
+    if(!hasAnswers&&!principle) return;
+
+    const ph=SEC_PHASES[sec.id]||{phase:''};
+    html+=`<div class="book-sec">
+      <div class="book-sec-hdr">
+        <span class="book-sec-dot" style="background:${sec.color}"></span>
+        <span class="book-sec-name">${sec.emoji} ${sec.name}</span>
+        <span class="book-sec-phase">${ph.phase}</span>
+      </div>`;
+
+    if(hasAnswers){
+      html+=`<div style="margin-bottom:18px">`;
+      askChs.forEach(ch=>{
+        const ans=loadAsk(ch.id);
+        if(!ans) return;
+        const q=ch.ask.replace(/<[^>]+>/g,'').replace(/👇/g,'').trim();
+        html+=`<div class="book-ask-ch">
+          <div class="book-ask-label">第${ch.id}关 · ${ch.emoji} ${ch.title}</div>
+          <div class="book-ask-text">${ans}</div>
+        </div>`;
+      });
+      html+=`</div>`;
+    }
+
+    html+=`<div class="book-principle-block">
+      <div class="book-principle-label">🧮 我的原则 · ${sec.name}</div>`;
+    if(principle){
+      const d=new Date(principle.date);
+      html+=`<div class="book-principle-text">${principle.text}</div>
+        <div class="book-principle-date">写于 ${d.getMonth()+1}月${d.getDate()}日</div>`;
+    } else {
+      html+=`<div class="book-principle-empty">这篇原则尚未写下——完成本篇关卡后可以写。</div>`;
+    }
+    html+=`</div></div>`;
+  });
+
+  if(writtenPrinciples.length>0){
+    html+=`<div class="book-divider"></div>
+    <div class="book-summary">
+      <div class="book-summary-title">🧮 账房先生的结算页 · 六条原则一览</div>`;
+    writtenPrinciples.forEach(s=>{
+      const p=loadPrinciple(s.id);
+      html+=`<div class="book-summary-item">
+        <span class="book-summary-sec">${s.emoji} ${s.name}</span>
+        <span class="book-summary-text">${p.text}</span>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  html+=`<div class="book-keeper-close">
+    <p>「原则是从自己的经历里提炼出来的，不是别人告诉你的道理。<br>你能写出来，才算是你自己的。」</p>
+    <div class="book-keeper-sign">—— 账房先生 · 黄昏驿站守站人</div>
+  </div>`;
+
   wrap.innerHTML=html;
 }
 
