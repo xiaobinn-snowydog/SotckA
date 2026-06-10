@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>从零搞懂A股 · 闯关</title>
+<title>从零搞懂A股 · 黄昏驿站</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
   --bg:#1b1822;--card:rgba(255,255,255,.045);--card2:rgba(255,255,255,.06);
-  --gold:#E9A949;--gold2:#F0BE6B;
+  --gold:#E9A949;--gold2:#F0BE6B;--dusk:#E98C49;
   --text:#ECE7DE;--muted:#9C968C;--locked:rgba(255,255,255,.05);
   --green:#7FB58A;--red:#C98B6B;--blue:#7C8A93;--purple:#9c8bd0;
   --line:rgba(255,255,255,.08);
@@ -18,7 +18,9 @@
 html,body{height:100%;color:var(--text);
   font-family:-apple-system,"PingFang SC","Hiragino Sans GB",sans-serif;
   font-size:15px;overflow:hidden;-webkit-font-smoothing:antialiased}
-body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #14121a 100%) fixed,#14121a}
+body{background:
+  radial-gradient(120% 62% at 50% -16%, rgba(233,140,73,.20) 0%, rgba(186,96,84,.10) 34%, transparent 62%),
+  radial-gradient(125% 80% at 50% -10%, #2d2434 0%, #211a2b 40%, #14111c 100%) fixed,#14111c}
 .view{position:fixed;top:0;left:0;right:0;bottom:var(--nav-h);
   overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .hidden{display:none!important}
@@ -48,16 +50,31 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
 
 /* map */
 #map-wrap{padding:8px 16px 28px;max-width:480px;margin:0 auto}
-.map-ttl{text-align:center;padding:22px 0 8px;font-size:25px;font-weight:750;color:var(--gold);letter-spacing:.5px}
+.map-brand{text-align:center;font-size:11px;letter-spacing:2.5px;color:var(--muted);padding-top:20px}
+.map-brand b{color:var(--dusk);font-weight:600}
+.map-ttl{text-align:center;padding:10px 0 8px;font-size:25px;font-weight:750;color:var(--gold);letter-spacing:.5px}
 .map-sub{text-align:center;color:var(--text);font-size:13.5px;margin-bottom:6px;opacity:.85}
-.map-tip{text-align:center;color:var(--muted);font-size:11.5px;margin-bottom:26px;letter-spacing:.3px}
-/* 闯关路径 */
-.path-sec{display:flex;align-items:center;gap:10px;margin:30px 4px 20px;
+.map-tip{text-align:center;color:var(--muted);font-size:11.5px;margin-bottom:18px;letter-spacing:.3px}
+/* 守站人：账房先生 */
+.keeper-card{display:flex;gap:12px;align-items:flex-start;margin:0 2px 26px;padding:14px 16px;
+  background:linear-gradient(135deg,rgba(233,169,73,.10),rgba(255,255,255,.03));
+  border:1px solid rgba(233,169,73,.28);border-radius:18px}
+.keeper-ava{width:46px;height:46px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:23px;
+  background:radial-gradient(circle at 32% 28%,#F0BE6B,#b97a2e);box-shadow:0 4px 14px -6px var(--gold)}
+.keeper-name{font-size:13.5px;font-weight:700;color:var(--gold)}
+.keeper-role{font-size:10px;color:var(--muted);font-weight:500;margin-left:6px;letter-spacing:.5px}
+.keeper-line{font-size:13px;color:#D7D1C7;line-height:1.75;margin-top:4px}
+.station-foot{text-align:center;color:var(--muted);font-size:11.5px;line-height:1.95;padding:28px 0 6px;letter-spacing:.4px}
+.station-foot span{color:rgba(233,169,73,.78);letter-spacing:1.5px}
+/* 篇章：穿越阶段 */
+.path-sec{display:flex;align-items:flex-start;gap:10px;margin:30px 4px 8px;
   padding-top:6px;border-top:1px solid var(--line)}
 .path-sec:first-child{border-top:none;margin-top:6px}
-.path-sec-dot{width:9px;height:9px;border-radius:50%;flex:none}
+.path-sec-dot{width:9px;height:9px;border-radius:50%;flex:none;margin-top:6px}
+.path-sec-mid{flex:1;min-width:0}
 .path-sec-name{font-size:16px;font-weight:700;letter-spacing:.2px}
-.path-sec-cnt{margin-left:auto;font-size:12px;color:var(--muted);letter-spacing:.3px}
+.path-sec-phase{font-size:10.5px;color:var(--muted);letter-spacing:.8px;margin-top:2px}
+.path-sec-cnt{font-size:12px;color:var(--muted);letter-spacing:.3px;white-space:nowrap;padding-top:4px}
 .node-row{display:flex;justify-content:center;margin:0 0 20px;position:relative}
 .node-row::before{content:'';position:absolute;left:50%;top:-22px;height:46px;width:2px;
   transform:translateX(-1px);z-index:0;
@@ -108,6 +125,31 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
 .stag.ex{background:rgba(156,139,208,.16);color:#c3b8e6}
 .stag.surp{background:rgba(201,139,107,.18);color:#e0a98c}
 .stag.fun{background:rgba(233,169,73,.14);color:#e9c07a}
+/* 古代初见记卡 */
+.stag.ancient{background:rgba(186,146,88,.18);color:#d4aa70;letter-spacing:1.2px}
+.ancient-card{background:linear-gradient(160deg,rgba(186,146,88,.09),rgba(255,255,255,.025));
+  border:1px solid rgba(186,146,88,.32);border-radius:22px;padding:24px 20px;
+  margin-bottom:14px;animation:si .45s var(--ease)}
+.ancient-divider{display:flex;align-items:center;gap:10px;margin:18px 0 0;opacity:.5}
+.ancient-divider::before,.ancient-divider::after{content:'';flex:1;height:1px;background:rgba(186,146,88,.4)}
+.ancient-divider span{font-size:10px;color:#d4aa70;letter-spacing:2px;white-space:nowrap}
+.ancient-body{font-size:14.5px;color:#e0d4bb;line-height:2.05}
+/* 序幕 overlay */
+#prologue{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(160% 90% at 50% 110%,rgba(186,96,60,.28) 0%,rgba(20,17,28,.96) 55%,#0e0c15 100%)}
+.prologue-inner{max-width:360px;width:100%;padding:0 28px;text-align:center}
+.prologue-year{font-size:11px;letter-spacing:3px;color:rgba(212,170,112,.7);margin-bottom:28px}
+.prologue-ava{font-size:56px;margin-bottom:22px;display:block}
+.prologue-line{font-size:15px;color:#d8cfbe;line-height:2;opacity:0;
+  animation:fadein .7s var(--ease) forwards}
+.prologue-line:nth-child(3){animation-delay:.3s}
+.prologue-line:nth-child(4){animation-delay:.6s}
+.prologue-line:nth-child(5){animation-delay:.9s}
+.prologue-hl{color:var(--gold);font-weight:600}
+.prologue-btn{margin-top:34px;padding:14px 36px;border-radius:16px;border:none;
+  background:var(--gold);color:#231c0c;font-size:16px;font-weight:700;cursor:pointer;
+  box-shadow:0 6px 24px -10px var(--gold);opacity:0;animation:fadein .6s 1.5s var(--ease) forwards}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .stag.goldtag{background:var(--accent-soft,rgba(233,169,73,.16));color:var(--gold)}
 .gold-card{text-align:center;padding:34px 22px}
 .gold-line{font-size:22px;font-weight:700;line-height:1.62;margin-top:20px;letter-spacing:.3px;color:var(--text)}
@@ -219,6 +261,115 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
 .rst-btn{width:100%;padding:12px;border-radius:12px;border:1px solid var(--red);
   background:transparent;color:var(--red);font-size:14px;cursor:pointer;margin-top:12px}
 
+/* 账本 view */
+#ledger-wrap{padding:16px;max-width:480px;margin:0 auto}
+.ledger-top{text-align:center;padding:18px 0 22px}
+.ledger-top-sub{font-size:12.5px;color:var(--muted);line-height:1.85;margin-top:6px}
+.ls{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 16px;margin-bottom:12px}
+.ls.todo{border-color:rgba(233,169,73,.4);background:linear-gradient(135deg,rgba(233,169,73,.07),transparent)}
+.ls.done{border-color:rgba(127,181,138,.38);background:rgba(127,181,138,.035)}
+.ls-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ls-dot{width:8px;height:8px;border-radius:50%;flex:none}
+.ls-name{font-size:14px;font-weight:700}
+.ls-st{margin-left:auto;font-size:11px;color:var(--muted);white-space:nowrap}
+.ls-principle{font-size:14px;color:#E0D8CC;line-height:1.9;border-left:2.5px solid var(--gold);padding-left:13px;margin-bottom:10px}
+.ls-prompt{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:12px}
+.ls-btn{padding:10px 20px;border-radius:12px;border:none;background:var(--gold);color:#231c0c;font-size:13px;font-weight:700;cursor:pointer}
+.ls-edit{padding:6px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:11.5px;cursor:pointer}
+.ls-meta{display:flex;align-items:center;gap:10px;margin-top:2px}
+.ls-date{font-size:11px;color:var(--muted)}
+.ls-lock{opacity:.38;font-size:12.5px;color:var(--muted);padding:4px 0}
+
+/* 篇末复盘 view */
+#view-reflect{background:var(--bg)}
+#ref-wrap{padding:22px 16px 32px;max-width:480px;margin:0 auto}
+.ref-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(127,181,138,.12);
+  border:1px solid rgba(127,181,138,.32);border-radius:20px;padding:5px 14px;
+  font-size:11.5px;color:#9fcbb4;margin-bottom:22px;letter-spacing:.4px}
+.ref-sec{font-size:21px;font-weight:800;color:var(--gold);margin-bottom:14px;line-height:1.35}
+.ref-q{font-size:14.5px;color:#D7D1C7;line-height:1.95;margin-bottom:20px}
+.ref-ta{width:100%;min-height:140px;background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(233,169,73,.28);border-radius:14px;padding:14px;
+  color:var(--text);font-size:14px;font-family:inherit;line-height:1.85;outline:none;resize:vertical;
+  transition:border-color .2s var(--ease)}
+.ref-ta:focus{border-color:var(--gold)}
+.ref-ta::placeholder{color:var(--muted);font-size:13px}
+.ref-skip{display:block;text-align:center;margin-top:14px;font-size:13px;color:var(--muted);
+  cursor:pointer;padding:8px;letter-spacing:.3px}
+.ledger-sum{text-align:center;padding:22px 0 8px;font-size:12px;color:var(--muted);line-height:1.9}
+
+/* 完整学习账本 */
+#view-book{background:var(--bg)}
+#book-wrap{padding:0 16px 48px;max-width:480px;margin:0 auto}
+.book-print-btn{margin-left:auto;padding:8px 18px;border-radius:12px;border:none;
+  background:var(--gold);color:#231c0c;font-size:13px;font-weight:700;cursor:pointer;
+  transition:opacity .2s}
+.book-print-btn:active{opacity:.75}
+.book-cover{text-align:center;padding:36px 8px 28px}
+.book-cover-em{font-size:46px;display:block;margin-bottom:16px}
+.book-cover-title{font-size:24px;font-weight:800;color:var(--gold);letter-spacing:.3px;margin-bottom:8px}
+.book-cover-sub{font-size:13px;color:var(--muted);line-height:1.85}
+.book-cover-date{font-size:11.5px;color:var(--muted);margin-top:14px;opacity:.55}
+.book-cover-stats{display:flex;justify-content:center;gap:28px;margin-top:22px}
+.book-cover-stat span{display:block;text-align:center}
+.book-cover-stat .book-stat-n{font-size:26px;font-weight:800;color:var(--gold2)}
+.book-cover-stat .book-stat-l{font-size:11px;color:var(--muted);margin-top:2px}
+.book-divider{height:1px;background:var(--line);margin:24px 0 28px}
+.book-sec{margin-bottom:40px}
+.book-sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px;
+  padding-bottom:12px;border-bottom:1px solid var(--line)}
+.book-sec-dot{width:10px;height:10px;border-radius:50%;flex:none}
+.book-sec-name{font-size:16px;font-weight:800;color:var(--text)}
+.book-sec-phase{font-size:10.5px;color:var(--muted);margin-left:auto;letter-spacing:.5px;white-space:nowrap}
+.book-ask-ch{margin-bottom:18px}
+.book-ask-label{font-size:10.5px;color:var(--muted);margin-bottom:5px;letter-spacing:.3px;
+  display:flex;align-items:center;gap:6px}
+.book-ask-text{font-size:14px;color:#E0D8CC;line-height:1.95;padding:11px 14px;
+  background:rgba(255,255,255,.03);border-radius:10px;border-left:2px solid rgba(233,169,73,.32)}
+.book-ask-empty{font-size:13px;color:var(--muted);opacity:.38;font-style:italic;
+  padding:8px 14px;border-left:2px solid rgba(255,255,255,.06)}
+.book-principle-block{background:linear-gradient(135deg,rgba(233,169,73,.10),rgba(255,255,255,.02));
+  border:1px solid rgba(233,169,73,.30);border-radius:16px;padding:18px 16px;margin-top:6px}
+.book-principle-label{font-size:10px;color:rgba(233,169,73,.65);letter-spacing:1.8px;
+  font-weight:600;margin-bottom:9px;text-transform:uppercase}
+.book-principle-text{font-size:15px;color:var(--gold);line-height:1.9;font-weight:500}
+.book-principle-empty{font-size:13px;color:var(--muted);opacity:.4;font-style:italic;line-height:1.7}
+.book-principle-date{font-size:10.5px;color:var(--muted);margin-top:10px;opacity:.5}
+.book-summary{background:rgba(255,255,255,.03);border:1px solid var(--line);
+  border-radius:18px;padding:22px 18px;margin:28px 0}
+.book-summary-title{font-size:14px;font-weight:700;color:var(--gold);margin-bottom:16px;letter-spacing:.3px}
+.book-summary-item{display:flex;gap:12px;margin-bottom:14px;
+  padding-bottom:14px;border-bottom:1px solid var(--line)}
+.book-summary-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.book-summary-sec{font-size:11px;color:var(--muted);flex:none;width:80px;padding-top:3px;line-height:1.5}
+.book-summary-text{font-size:14px;color:#E0D8CC;line-height:1.9;
+  border-left:2.5px solid var(--gold);padding-left:12px}
+.book-keeper-close{text-align:center;padding:24px 12px 8px}
+.book-keeper-close p{font-size:14px;color:#D7D1C7;line-height:2.05;font-style:italic}
+.book-keeper-sign{font-size:12px;color:var(--muted);margin-top:14px;opacity:.7}
+.book-empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px;line-height:2.1}
+.book-gen-btn{width:100%;padding:15px;border-radius:16px;border:1px solid rgba(233,169,73,.38);
+  background:linear-gradient(135deg,rgba(233,169,73,.12),rgba(233,169,73,.06));
+  color:var(--gold);font-size:15px;font-weight:700;cursor:pointer;margin-top:18px;
+  letter-spacing:.3px;transition:background .2s var(--ease)}
+.book-gen-btn:active{background:rgba(233,169,73,.22)}
+@media print{
+  #bnav,#toast,#confetti,#prologue,.back-btn,.book-print-btn,.book-gen-btn{display:none!important}
+  .view{position:static!important;overflow:visible!important;bottom:auto!important}
+  .hidden{display:none!important}
+  #view-book{display:block!important}
+  body{background:#fff!important;color:#1a1a1a!important;-webkit-print-color-adjust:exact}
+  .book-cover-title,.book-summary-title,.book-principle-label{color:#b97a2e}
+  .book-principle-text,.book-cover-stat .book-stat-n{color:#b97a2e}
+  .book-sec-name{color:#1a1a1a}
+  .book-ask-text{background:#f9f4ec;border-left-color:#b97a2e;color:#2a2015}
+  .book-principle-block{background:#fdf6ec;border-color:rgba(185,122,46,.5)}
+  .book-summary{background:#f9f4ec;border-color:#ddd}
+  .book-summary-text{border-left-color:#b97a2e;color:#2a2015}
+  .book-keeper-close p{color:#2a2015}
+  .book-divider,.book-sec-hdr,.book-summary-item{border-color:#ddd}
+}
+
 /* toast + confetti */
 #toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-90px);
   background:var(--card);border-radius:20px;padding:10px 20px;font-size:15px;
@@ -235,12 +386,33 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
 <body>
 
 <!-- MAP -->
+<!-- 穿越序幕（首次打开） -->
+<div id="prologue">
+  <div class="prologue-inner">
+    <div class="prologue-year">🌇 黄昏驿站 · 账房先生初见记</div>
+    <span class="prologue-ava">🧮</span>
+    <div class="prologue-line">某日睁眼，发现来到了一个叫「现代」的地方。</div>
+    <div class="prologue-line">这里有粮有药有信息，比我那时代繁华百倍。</div>
+    <div class="prologue-line">可我看见的人，大多不幸福。<br>我想了很久，才想清楚——<br><span class="prologue-hl">不是没有钱，是没有看清楚钱的规则。</span></div>
+    <button class="prologue-btn" onclick="enterStation()">入关 · 开始算账 →</button>
+  </div>
+</div>
+
 <div id="view-map" class="view">
   <div id="map-wrap">
+    <div class="map-brand">🌇 <b>黄昏驿站</b> · 钱包战场</div>
     <div class="map-ttl">📈 从零搞懂A股</div>
     <div class="map-sub">没人教过、但你该懂的投资课</div>
     <div class="map-tip">大白话 · 费曼学习法 · 一关5分钟</div>
+    <div class="keeper-card">
+      <div class="keeper-ava">🧮</div>
+      <div>
+        <div class="keeper-name">账房先生<span class="keeper-role">驿站守站人</span></div>
+        <div class="keeper-line" id="keeper-line"></div>
+      </div>
+    </div>
     <div id="sec-list"></div>
+    <div class="station-foot">驿站是中转，不是终点。<br>在这里把账看明白，然后继续上路。<br><span>不荐股 · 不预测 · 只教框架</span></div>
   </div>
 </div>
 
@@ -262,11 +434,11 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
 
 <!-- TOOLBOX -->
 <div id="view-tool" class="view hidden">
-  <div class="hdr"><span style="color:var(--gold);font-size:18px;font-weight:800">复利计算器</span></div>
+  <div class="hdr"><span style="color:var(--gold);font-size:18px;font-weight:800">🧮 账房的算盘</span></div>
   <div id="tool-wrap">
     <div class="intro"><span class="intro-em">⛄</span>
       <strong style="display:block;margin-bottom:6px;font-size:15px">定投复利：滚雪球</strong>
-      <p style="font-size:13px;color:var(--muted);line-height:1.7">每个月坚持投一笔钱，让时间和复利帮你滚雪球。算算看，多年后你能攒下多少。</p>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7">账房先生：我不替你预测收益，这把算盘只是把「利滚利」一颗一颗摆给你看。每个月投一笔，看看时间能帮你滚多大。</p>
     </div>
     <div class="fgrp"><label class="flbl">每月投入（元）</label>
       <input class="finp" type="number" id="iv-m" value="1000"></div>
@@ -287,11 +459,45 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
   <div id="prog-wrap"></div>
 </div>
 
+<!-- REFLECT 篇末复盘 -->
+<div id="view-reflect" class="view hidden">
+  <div class="hdr">
+    <button class="back-btn" onclick="skipReflect()">←</button>
+    <span class="hdr-title" id="ref-hdr-title"></span>
+  </div>
+  <div id="ref-wrap">
+    <div class="ref-badge">🧮 账房先生 · 篇末复盘</div>
+    <div class="ref-sec" id="ref-sec"></div>
+    <div class="ref-q" id="ref-q"></div>
+    <textarea class="ref-ta" id="ref-ta" rows="6" placeholder="用你自己的话写……不是课程里的答案，是你的。"></textarea>
+    <button class="sbtn" style="margin-top:16px" onclick="saveReflect()">存入账本 →</button>
+    <span class="ref-skip" onclick="skipReflect()">先跳过，稍后在账本里写</span>
+  </div>
+</div>
+
+<!-- LEDGER 我的账本 -->
+<div id="view-ledger" class="view hidden">
+  <div class="hdr"><span style="color:var(--gold);font-size:18px;font-weight:800">📒 我的账本</span></div>
+  <div id="ledger-wrap"></div>
+</div>
+
+<!-- BOOK 完整学习账本 -->
+<div id="view-book" class="view hidden">
+  <div class="hdr">
+    <button class="back-btn" onclick="showView('ledger')">←</button>
+    <span class="hdr-title">完整学习账本</span>
+    <button class="book-print-btn" onclick="window.print()">导出 PDF</button>
+  </div>
+  <div id="book-wrap"></div>
+</div>
+
 <nav id="bnav">
   <button class="nbtn on" id="nb-map" onclick="showView('map')">
     <span class="ic"><svg viewBox="0 0 24 24"><path d="M5 21V4c3-1.4 5 1.4 8 0s5-1.4 7 0v9c-2 1.4-5-1.4-7 0s-5 1.4-8 0"/></svg></span><span>闯关</span></button>
   <button class="nbtn" id="nb-tool" onclick="showView('tool')">
-    <span class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="12" x2="9.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="9" y1="16" x2="9.01" y2="16"/><line x1="12" y1="16" x2="12.01" y2="16"/><line x1="15" y1="16" x2="15.01" y2="16"/></svg></span><span>计算器</span></button>
+    <span class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="12" x2="9.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="9" y1="16" x2="9.01" y2="16"/><line x1="12" y1="16" x2="12.01" y2="16"/><line x1="15" y1="16" x2="15.01" y2="16"/></svg></span><span>算盘</span></button>
+  <button class="nbtn" id="nb-ledger" onclick="showView('ledger')">
+    <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="12" y1="7" x2="16" y2="7"/><line x1="12" y1="11" x2="16" y2="11"/></svg></span><span>账本</span></button>
   <button class="nbtn" id="nb-progress" onclick="showView('progress')">
     <span class="ic"><svg viewBox="0 0 24 24"><line x1="6" y1="20" x2="6" y2="13"/><line x1="12" y1="20" x2="12" y2="7"/><line x1="18" y1="20" x2="18" y2="10"/></svg></span><span>进度</span></button>
 </nav>
@@ -492,23 +698,66 @@ function mkMatrix({cells,rowLabel,colLabel}){
 // 状态
 // ══════════════════════════════════════════════
 const STORE='azhul_a_stock_v1';
-let S={unlocked:[1],completed:[],cur:null,step:0,answered:false,steps:[]};
-function loadS(){try{const d=localStorage.getItem(STORE);if(d)Object.assign(S,JSON.parse(d))}catch(e){}}
-function saveS(){try{localStorage.setItem(STORE,JSON.stringify({unlocked:S.unlocked,completed:S.completed}))}catch(e){}}
+
+// 穿越阶段标注
+const SEC_PHASES={
+  1:{phase:'误判期',sub:'初入现代，以为账目都能看清'},
+  2:{phase:'误判期',sub:'撞上古今不同的规矩'},
+  3:{phase:'击穿期',sub:'被现代系统算了一次'},
+  4:{phase:'觉醒期',sub:'拨清算盘，建自己的框架'},
+  5:{phase:'建站期',sub:'立纪律，守站人的答案'},
+  6:{phase:'建站期',sub:'最难拨的，是内心这把算盘'},
+};
+// 守站人语录
+const KEEPER_LINES=[
+  '我不替你下注，只陪你把账算清楚。规则看懂了，路你自己走。',
+  '分期免息、先用后付？我拨一拨算盘，利滚利就藏在里面。把戏没变新，只是更难看见了。',
+  '看懂规则，比听消息值钱。今天先对一笔账。',
+  '黄昏了，停一停。看清你在哪里，再决定往哪走。',
+  '账要自己看明白，答案也得是你自己的。我只管把算盘摆正。'
+];
+function keeperGreet(){
+  const el=document.getElementById('keeper-line');
+  if(el) el.textContent=KEEPER_LINES[new Date().getDate()%KEEPER_LINES.length];
+}
+// 序幕：首次打开显示，之后隐藏
+function enterStation(){
+  document.getElementById('prologue').classList.add('hidden');
+  try{localStorage.setItem('zos_prologue','1')}catch(e){}
+}
+function maybePrologue(){
+  try{if(localStorage.getItem('zos_prologue'))document.getElementById('prologue').classList.add('hidden');}catch(e){}
+}
+let S={unlocked:[1],completed:[],reflected:[],cur:null,step:0,answered:false,steps:[]};
+function loadS(){
+  try{const d=localStorage.getItem(STORE);if(d){Object.assign(S,JSON.parse(d));if(!S.reflected)S.reflected=[];}}catch(e){}
+}
+function saveS(){
+  try{localStorage.setItem(STORE,JSON.stringify({unlocked:S.unlocked,completed:S.completed,reflected:S.reflected}))}catch(e){}
+}
+// 原则存取
+function savePrinciple(secId,text){
+  try{localStorage.setItem('zos_p_'+secId,JSON.stringify({text,date:Date.now()}))}catch(e){}
+}
+function loadPrinciple(secId){
+  try{const d=localStorage.getItem('zos_p_'+secId);return d?JSON.parse(d):null}catch(e){return null}
+}
 
 // ══════════════════════════════════════════════
 // 导航
 // ══════════════════════════════════════════════
 function showView(name){
-  ['map','chapter','tool','progress'].forEach(v=>{
+  ['map','chapter','tool','progress','reflect','ledger','book'].forEach(v=>{
     document.getElementById('view-'+v).classList.toggle('hidden',v!==name);
   });
-  ['map','tool','progress'].forEach(v=>{
+  ['map','tool','ledger','progress'].forEach(v=>{
     const b=document.getElementById('nb-'+v);
     if(b) b.classList.toggle('on',v===name);
   });
   if(name==='map') renderMap();
   if(name==='progress') renderProg();
+  if(name==='ledger') renderLedger();
+  if(name==='book') renderBook();
   window.scrollTo(0,0);
 }
 
@@ -525,10 +774,14 @@ function renderMap(){
     const chs=CHAPTERS.filter(c=>c.sec===sec.id);
     const ready=chs.filter(c=>c.conc);
     const doneN=chs.filter(c=>S.completed.includes(c.id)).length;
+    const ph=SEC_PHASES[sec.id]||{phase:'',sub:''};
     html+=`<div class="path-sec">
       <span class="path-sec-dot" style="background:${sec.color}"></span>
-      <span class="path-sec-name">${sec.name}</span>
-      <span class="path-sec-cnt">${ready.length?doneN+'/'+chs.length:sec.sub}</span>
+      <div class="path-sec-mid">
+        <div class="path-sec-name">${sec.name}</div>
+        <div class="path-sec-phase" style="color:${sec.color};opacity:.75">${ph.phase} · ${ph.sub}</div>
+      </div>
+      <span class="path-sec-cnt">${ready.length?doneN+'/'+chs.length:''}</span>
     </div>`;
     if(ready.length===0){
       html+=`<div class="soon">🔜 ${sec.name} · 敬请期待</div>`;
@@ -556,6 +809,7 @@ function renderMap(){
 // ══════════════════════════════════════════════
 function buildSteps(ch){
   const st=[];
+  if(ch.ancient) st.push({t:'ancient'});
   if(ch.hook) st.push({t:'hook'});
   if(ch.prob) st.push({t:'prob'});
   if(ch.conc) st.push({t:'conc'});
@@ -587,7 +841,15 @@ function renderStep(ch,n){
   const st=steps[n];
   const quizCount=ch.quiz?ch.quiz.length:0;
 
-  if(st.t==='hook'){
+  if(st.t==='ancient'){
+    sc.innerHTML=`<div class="ancient-card">
+      <span class="stag ancient">📜 账房先生 · 初见记</span>
+      <div class="ancient-body">${ch.ancient}</div>
+      <div class="ancient-divider"><span>古今对照</span></div>
+    </div>`;
+    sa.innerHTML=`<button class="sbtn bc" onclick="nextStep()">看现代人怎么说 →</button>`;
+  }
+  else if(st.t==='hook'){
     sc.innerHTML=`<div class="scard">
       <span class="stag hook">🎬 生活里的事</span>
       <span class="sbig">${ch.emoji}</span>
@@ -678,7 +940,7 @@ function renderStep(ch,n){
   }
   else if(st.t==='gold'){
     sc.innerHTML=`<div class="scard gold-card">
-      <span class="stag goldtag">🔑 记住一句就够</span>
+      <span class="stag goldtag">🧮 账房先生 · 记一笔就够</span>
       <div class="gold-line">${ch.gold}</div>
     </div>`;
     sa.innerHTML=`<button class="sbtn bg" onclick="unlockNext()">完成这一关 →</button>`;
@@ -707,7 +969,7 @@ function checkAns(chosen){
   const fb=document.getElementById('qfb');
   const right=chosen===cor;
   fb.className='qfb '+(right?'ok':'no');
-  fb.innerHTML=right?`<strong>✓ 对了。</strong> ${q.ex}`:`<strong>差一点。</strong> ${q.ex}`;
+  fb.innerHTML=right?`<strong>✓ 账对上了。</strong> ${q.ex}`:`<strong>这笔账差一点。</strong> ${q.ex}`;
   fb.classList.remove('hidden');
   if(right){
     document.getElementById('next-btn').classList.remove('hidden');
@@ -717,19 +979,30 @@ function checkAns(chosen){
 }
 function unlockNext(){
   const id=S.cur;
-  if(!S.completed.includes(id)) S.completed.push(id);
+  const wasCompleted=S.completed.includes(id);
+  if(!wasCompleted) S.completed.push(id);
+  // 解锁下一关（无论是否篇末）
   const nxt=id+1;
   const nextCh=CHAPTERS.find(c=>c.id===nxt);
-  if(nextCh && nextCh.conc){
-    if(!S.unlocked.includes(nxt)){ S.unlocked.push(nxt); toast('🔓 第'+nxt+'关已解锁！'); }
-    else toast('✅ 本关已完成！');
-  }else if(nextCh){
-    if(!S.unlocked.includes(nxt)) S.unlocked.push(nxt);
-    toast('🎉 本篇暂时到这，后续关卡马上更新！');
-  }else{
-    toast('🏆 太厉害了，全部通关！');
-  }
+  if(nextCh && !S.unlocked.includes(nxt)) S.unlocked.push(nxt);
   saveS();
+  // 检测是否刚刚完成了一整篇（首次）
+  if(!wasCompleted){
+    const ch=CHAPTERS.find(c=>c.id===id);
+    if(ch){
+      const secId=ch.sec;
+      const secChs=CHAPTERS.filter(c=>c.sec===secId&&c.conc);
+      const sectionDone=secChs.every(c=>S.completed.includes(c.id));
+      if(sectionDone&&!S.reflected.includes(secId)){
+        showReflect(secId);
+        return;
+      }
+    }
+  }
+  // 普通完成提示
+  if(nextCh&&nextCh.conc&&!wasCompleted) toast('🏮 第'+nxt+'关已解锁，继续赶路！');
+  else if(!nextCh) toast('🏮 全部通关。账已看清，路在你脚下。');
+  else toast('✅ 这笔账已经对清了！');
   showView('map');
 }
 
@@ -961,8 +1234,223 @@ function confetti(){
 // ══════════════════════════════════════════════
 // 启动
 // ══════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// 篇末复盘 + 我的账本
+// ══════════════════════════════════════════════
+const SECTION_REFLECTIONS={
+  1:{sec:'篇1 · 金钱常识',q:'这篇讲的是大多数人从来没被教过的金钱规则。<br><br>在你自己的账里，有没有一个「以为没亏、其实一直在亏」的地方？用一句话写下来。',ph:'比如：我一直把钱放活期，以为安全，其实每年跑不赢通胀……'},
+  2:{sec:'篇2 · A股脾气',q:'这个市场和你以为的不一样。<br><br>如果让你现在立一条「我在A股里的纪律」，你会写什么？哪怕只有一句。',ph:'比如：我不追涨，不抄底，不买我看不懂的……'},
+  3:{sec:'篇3 · 大环境',q:'宏观环境最容易带着普通人做出错误决定。<br><br>你自己最容易被哪种信号带跑？',ph:'比如：听说要降息就想买，看到新闻说某行业要涨就冲进去……'},
+  4:{sec:'篇4 · 看公司',q:'以后你看一家公司，会先问哪几个问题？<br><br>用自己的话写——不是课程框架，是你真正会去查的那几件事。',ph:'比如：这家公司靠什么赚钱？老板靠不靠谱？现在贵不贵？……'},
+  5:{sec:'篇5 · 适合你的机会',q:'写下你自己的禁区清单。<br><br>不是课程里那条通用的，是你的——结合你的性格、资金量和过去的教训。',ph:'比如：不碰我看不懂的，不用我不能承受损失的钱，不听朋友推荐……'},
+  6:{sec:'篇6 · 战胜自己',q:'投资里最难打败的对手是自己。<br><br>你在投资里最难控制的那个冲动是什么？下次它出现时，你打算怎么做？',ph:'比如：我一看到别人赚了就着急，我打算下次强制等三天再决定……'},
+};
+
+let _reflectSec=null;
+
+function showReflect(secId){
+  _reflectSec=secId;
+  const r=SECTION_REFLECTIONS[secId];
+  const sec=SECTIONS.find(s=>s.id===secId);
+  document.getElementById('ref-hdr-title').textContent=sec?sec.name:'';
+  document.getElementById('ref-sec').textContent=(r?r.sec:'');
+  document.getElementById('ref-q').innerHTML=(r?r.q:'');
+  const ta=document.getElementById('ref-ta');
+  ta.placeholder=r?r.ph:'';
+  const prev=loadPrinciple(secId);
+  ta.value=prev?prev.text:'';
+  showView('reflect');
+}
+function saveReflect(){
+  const text=document.getElementById('ref-ta').value.trim();
+  if(text&&_reflectSec){
+    savePrinciple(_reflectSec,text);
+    if(!S.reflected.includes(_reflectSec)) S.reflected.push(_reflectSec);
+    saveS();
+    toast('📒 原则已存入账本');
+  } else if(_reflectSec){
+    if(!S.reflected.includes(_reflectSec)) S.reflected.push(_reflectSec);
+    saveS();
+  }
+  showView('map');
+}
+function skipReflect(){
+  if(_reflectSec&&!S.reflected.includes(_reflectSec)){
+    S.reflected.push(_reflectSec); saveS();
+  }
+  showView('map');
+}
+
+function renderLedger(){
+  const wrap=document.getElementById('ledger-wrap');
+  const writtenCount=SECTIONS.filter(s=>loadPrinciple(s.id)).length;
+  let html=`<div class="ledger-top">
+    <div style="font-size:13px;color:var(--muted);line-height:1.9" class="ledger-top-sub">
+      六篇各写一条原则，才算真的建了框架。<br>
+      <span style="color:rgba(233,169,73,.7)">账房先生：这里的答案，是你的，不是我的。</span>
+    </div>
+  </div>`;
+  SECTIONS.forEach(sec=>{
+    const secChs=CHAPTERS.filter(c=>c.sec===sec.id&&c.conc);
+    const doneN=secChs.filter(c=>S.completed.includes(c.id)).length;
+    const total=secChs.length;
+    const secDone=total>0&&doneN===total;
+    const principle=loadPrinciple(sec.id);
+    const phase=SEC_PHASES[sec.id]||{phase:''};
+    const r=SECTION_REFLECTIONS[sec.id];
+
+    if(doneN===0){
+      html+=`<div class="ls"><div class="ls-top">
+        <span class="ls-dot" style="background:${sec.color};opacity:.35"></span>
+        <span class="ls-name" style="opacity:.45">${sec.emoji} ${sec.name}</span>
+        <span class="ls-st">未开始</span></div>
+        <div class="ls-lock">先完成关卡，再写原则</div></div>`;
+    } else if(!secDone){
+      html+=`<div class="ls"><div class="ls-top">
+        <span class="ls-dot" style="background:${sec.color}"></span>
+        <span class="ls-name">${sec.emoji} ${sec.name}</span>
+        <span class="ls-st">${doneN}/${total} 关</span></div>
+        <div style="font-size:12.5px;color:var(--muted)">本篇完成后可写原则</div></div>`;
+    } else if(!principle){
+      html+=`<div class="ls todo"><div class="ls-top">
+        <span class="ls-dot" style="background:${sec.color}"></span>
+        <span class="ls-name">${sec.emoji} ${sec.name}</span>
+        <span class="ls-st" style="color:var(--gold)">待写原则</span></div>
+        <div class="ls-prompt">${r?(r.q.replace(/<br><br>/g,'\n').split('\n').pop()||''):''}</div>
+        <button class="ls-btn" onclick="showReflect(${sec.id})">写下我的原则 →</button></div>`;
+    } else {
+      const d=new Date(principle.date);
+      const ds=`${d.getMonth()+1}月${d.getDate()}日`;
+      html+=`<div class="ls done"><div class="ls-top">
+        <span class="ls-dot" style="background:${sec.color}"></span>
+        <span class="ls-name">${sec.emoji} ${sec.name}</span>
+        <span class="ls-st" style="color:var(--green)">✓ 已写</span></div>
+        <div class="ls-principle">${principle.text}</div>
+        <div class="ls-meta">
+          <span class="ls-date">写于 ${ds}</span>
+          <button class="ls-edit" onclick="showReflect(${sec.id})">改一改</button>
+        </div></div>`;
+    }
+  });
+  const hasAnyContent=writtenCount>0||CHAPTERS.some(c=>c.ask&&loadAsk(c.id));
+  if(writtenCount>0){
+    html+=`<div class="ledger-sum">已写 <strong style="color:var(--gold)">${writtenCount}</strong> / 6 条原则<br>
+      <span style="opacity:.55">账本是用来对照自己行为的，不是用来展示的。</span></div>`;
+  }
+  if(hasAnyContent){
+    html+=`<button class="book-gen-btn" onclick="showView('book')">📖 生成我的完整学习账本 →</button>`;
+  }
+  wrap.innerHTML=html;
+}
+
+// ══════════════════════════════════════════════
+// 完整学习账本
+// ══════════════════════════════════════════════
+function renderBook(){
+  const wrap=document.getElementById('book-wrap');
+  const allAskChs=CHAPTERS.filter(c=>c.ask);
+  const hasAnyAnswer=allAskChs.some(c=>loadAsk(c.id));
+  const writtenPrinciples=SECTIONS.filter(s=>loadPrinciple(s.id));
+
+  if(!hasAnyAnswer&&writtenPrinciples.length===0){
+    wrap.innerHTML=`<div class="book-empty">🧮 账本还是空的。<br>先去完成几关，把你的思考写下来，<br>才有东西装进这本账里。</div>`;
+    return;
+  }
+
+  const today=new Date();
+  const dateStr=`${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日`;
+  const completedN=S.completed.length;
+  const totalN=CHAPTERS.filter(c=>c.conc).length;
+
+  let html=`<div class="book-cover">
+    <span class="book-cover-em">📖</span>
+    <div class="book-cover-title">我的A股学习账本</div>
+    <div class="book-cover-sub">从零搞懂A股 · 黄昏驿站<br>这本账是你写的，不是课程的答案</div>
+    <div class="book-cover-stats">
+      <div class="book-cover-stat">
+        <span class="book-stat-n">${completedN}</span>
+        <span class="book-stat-l">关卡完成</span>
+      </div>
+      <div class="book-cover-stat">
+        <span class="book-stat-n">${allAskChs.filter(c=>loadAsk(c.id)).length}</span>
+        <span class="book-stat-l">条笔记</span>
+      </div>
+      <div class="book-cover-stat">
+        <span class="book-stat-n">${writtenPrinciples.length}</span>
+        <span class="book-stat-l">条原则</span>
+      </div>
+    </div>
+    <div class="book-cover-date">整理于 ${dateStr}</div>
+  </div>
+  <div class="book-divider"></div>`;
+
+  SECTIONS.forEach(sec=>{
+    const secChs=CHAPTERS.filter(c=>c.sec===sec.id);
+    const askChs=secChs.filter(c=>c.ask);
+    const principle=loadPrinciple(sec.id);
+    const hasAnswers=askChs.some(c=>loadAsk(c.id));
+    if(!hasAnswers&&!principle) return;
+
+    const ph=SEC_PHASES[sec.id]||{phase:''};
+    html+=`<div class="book-sec">
+      <div class="book-sec-hdr">
+        <span class="book-sec-dot" style="background:${sec.color}"></span>
+        <span class="book-sec-name">${sec.emoji} ${sec.name}</span>
+        <span class="book-sec-phase">${ph.phase}</span>
+      </div>`;
+
+    if(hasAnswers){
+      html+=`<div style="margin-bottom:18px">`;
+      askChs.forEach(ch=>{
+        const ans=loadAsk(ch.id);
+        if(!ans) return;
+        const q=ch.ask.replace(/<[^>]+>/g,'').replace(/👇/g,'').trim();
+        html+=`<div class="book-ask-ch">
+          <div class="book-ask-label">第${ch.id}关 · ${ch.emoji} ${ch.title}</div>
+          <div class="book-ask-text">${ans}</div>
+        </div>`;
+      });
+      html+=`</div>`;
+    }
+
+    html+=`<div class="book-principle-block">
+      <div class="book-principle-label">🧮 我的原则 · ${sec.name}</div>`;
+    if(principle){
+      const d=new Date(principle.date);
+      html+=`<div class="book-principle-text">${principle.text}</div>
+        <div class="book-principle-date">写于 ${d.getMonth()+1}月${d.getDate()}日</div>`;
+    } else {
+      html+=`<div class="book-principle-empty">这篇原则尚未写下——完成本篇关卡后可以写。</div>`;
+    }
+    html+=`</div></div>`;
+  });
+
+  if(writtenPrinciples.length>0){
+    html+=`<div class="book-divider"></div>
+    <div class="book-summary">
+      <div class="book-summary-title">🧮 账房先生的结算页 · 六条原则一览</div>`;
+    writtenPrinciples.forEach(s=>{
+      const p=loadPrinciple(s.id);
+      html+=`<div class="book-summary-item">
+        <span class="book-summary-sec">${s.emoji} ${s.name}</span>
+        <span class="book-summary-text">${p.text}</span>
+      </div>`;
+    });
+    html+=`</div>`;
+  }
+
+  html+=`<div class="book-keeper-close">
+    <p>「原则是从自己的经历里提炼出来的，不是别人告诉你的道理。<br>你能写出来，才算是你自己的。」</p>
+    <div class="book-keeper-sign">—— 账房先生 · 黄昏驿站守站人</div>
+  </div>`;
+
+  wrap.innerHTML=html;
+}
+
 loadS();
 renderMap();
+keeperGreet();
+maybePrologue();
 </script>
 </body>
 </html>
