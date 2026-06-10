@@ -66,13 +66,15 @@ body{background:
 .keeper-line{font-size:13px;color:#D7D1C7;line-height:1.75;margin-top:4px}
 .station-foot{text-align:center;color:var(--muted);font-size:11.5px;line-height:1.95;padding:28px 0 6px;letter-spacing:.4px}
 .station-foot span{color:rgba(233,169,73,.78);letter-spacing:1.5px}
-/* 闯关路径 */
-.path-sec{display:flex;align-items:center;gap:10px;margin:30px 4px 20px;
+/* 篇章：穿越阶段 */
+.path-sec{display:flex;align-items:flex-start;gap:10px;margin:30px 4px 8px;
   padding-top:6px;border-top:1px solid var(--line)}
 .path-sec:first-child{border-top:none;margin-top:6px}
-.path-sec-dot{width:9px;height:9px;border-radius:50%;flex:none}
+.path-sec-dot{width:9px;height:9px;border-radius:50%;flex:none;margin-top:6px}
+.path-sec-mid{flex:1;min-width:0}
 .path-sec-name{font-size:16px;font-weight:700;letter-spacing:.2px}
-.path-sec-cnt{margin-left:auto;font-size:12px;color:var(--muted);letter-spacing:.3px}
+.path-sec-phase{font-size:10.5px;color:var(--muted);letter-spacing:.8px;margin-top:2px}
+.path-sec-cnt{font-size:12px;color:var(--muted);letter-spacing:.3px;white-space:nowrap;padding-top:4px}
 .node-row{display:flex;justify-content:center;margin:0 0 20px;position:relative}
 .node-row::before{content:'';position:absolute;left:50%;top:-22px;height:46px;width:2px;
   transform:translateX(-1px);z-index:0;
@@ -123,6 +125,31 @@ body{background:
 .stag.ex{background:rgba(156,139,208,.16);color:#c3b8e6}
 .stag.surp{background:rgba(201,139,107,.18);color:#e0a98c}
 .stag.fun{background:rgba(233,169,73,.14);color:#e9c07a}
+/* 古代初见记卡 */
+.stag.ancient{background:rgba(186,146,88,.18);color:#d4aa70;letter-spacing:1.2px}
+.ancient-card{background:linear-gradient(160deg,rgba(186,146,88,.09),rgba(255,255,255,.025));
+  border:1px solid rgba(186,146,88,.32);border-radius:22px;padding:24px 20px;
+  margin-bottom:14px;animation:si .45s var(--ease)}
+.ancient-divider{display:flex;align-items:center;gap:10px;margin:18px 0 0;opacity:.5}
+.ancient-divider::before,.ancient-divider::after{content:'';flex:1;height:1px;background:rgba(186,146,88,.4)}
+.ancient-divider span{font-size:10px;color:#d4aa70;letter-spacing:2px;white-space:nowrap}
+.ancient-body{font-size:14.5px;color:#e0d4bb;line-height:2.05}
+/* 序幕 overlay */
+#prologue{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(160% 90% at 50% 110%,rgba(186,96,60,.28) 0%,rgba(20,17,28,.96) 55%,#0e0c15 100%)}
+.prologue-inner{max-width:360px;width:100%;padding:0 28px;text-align:center}
+.prologue-year{font-size:11px;letter-spacing:3px;color:rgba(212,170,112,.7);margin-bottom:28px}
+.prologue-ava{font-size:56px;margin-bottom:22px;display:block}
+.prologue-line{font-size:15px;color:#d8cfbe;line-height:2;opacity:0;
+  animation:fadein .7s var(--ease) forwards}
+.prologue-line:nth-child(3){animation-delay:.3s}
+.prologue-line:nth-child(4){animation-delay:.6s}
+.prologue-line:nth-child(5){animation-delay:.9s}
+.prologue-hl{color:var(--gold);font-weight:600}
+.prologue-btn{margin-top:34px;padding:14px 36px;border-radius:16px;border:none;
+  background:var(--gold);color:#231c0c;font-size:16px;font-weight:700;cursor:pointer;
+  box-shadow:0 6px 24px -10px var(--gold);opacity:0;animation:fadein .6s 1.5s var(--ease) forwards}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .stag.goldtag{background:var(--accent-soft,rgba(233,169,73,.16));color:var(--gold)}
 .gold-card{text-align:center;padding:34px 22px}
 .gold-line{font-size:22px;font-weight:700;line-height:1.62;margin-top:20px;letter-spacing:.3px;color:var(--text)}
@@ -250,6 +277,18 @@ body{background:
 <body>
 
 <!-- MAP -->
+<!-- 穿越序幕（首次打开） -->
+<div id="prologue">
+  <div class="prologue-inner">
+    <div class="prologue-year">🌇 黄昏驿站 · 账房先生初见记</div>
+    <span class="prologue-ava">🧮</span>
+    <div class="prologue-line">某日睁眼，发现来到了一个叫「现代」的地方。</div>
+    <div class="prologue-line">这里有粮有药有信息，比我那时代繁华百倍。</div>
+    <div class="prologue-line">可我看见的人，大多不幸福。<br>我想了很久，才想清楚——<br><span class="prologue-hl">不是没有钱，是没有看清楚钱的规则。</span></div>
+    <button class="prologue-btn" onclick="enterStation()">入关 · 开始算账 →</button>
+  </div>
+</div>
+
 <div id="view-map" class="view">
   <div id="map-wrap">
     <div class="map-brand">🌇 <b>黄昏驿站</b> · 钱包战场</div>
@@ -517,7 +556,16 @@ function mkMatrix({cells,rowLabel,colLabel}){
 // ══════════════════════════════════════════════
 const STORE='azhul_a_stock_v1';
 
-// 守站人语录：账房先生只把账摆给你看，不替你下注
+// 穿越阶段标注
+const SEC_PHASES={
+  1:{phase:'误判期',sub:'初入现代，以为账目都能看清'},
+  2:{phase:'误判期',sub:'撞上古今不同的规矩'},
+  3:{phase:'击穿期',sub:'被现代系统算了一次'},
+  4:{phase:'觉醒期',sub:'拨清算盘，建自己的框架'},
+  5:{phase:'建站期',sub:'立纪律，守站人的答案'},
+  6:{phase:'建站期',sub:'最难拨的，是内心这把算盘'},
+};
+// 守站人语录
 const KEEPER_LINES=[
   '我不替你下注，只陪你把账算清楚。规则看懂了，路你自己走。',
   '分期免息、先用后付？我拨一拨算盘，利滚利就藏在里面。把戏没变新，只是更难看见了。',
@@ -528,6 +576,14 @@ const KEEPER_LINES=[
 function keeperGreet(){
   const el=document.getElementById('keeper-line');
   if(el) el.textContent=KEEPER_LINES[new Date().getDate()%KEEPER_LINES.length];
+}
+// 序幕：首次打开显示，之后隐藏
+function enterStation(){
+  document.getElementById('prologue').classList.add('hidden');
+  try{localStorage.setItem('zos_prologue','1')}catch(e){}
+}
+function maybePrologue(){
+  try{if(localStorage.getItem('zos_prologue'))document.getElementById('prologue').classList.add('hidden');}catch(e){}
 }
 let S={unlocked:[1],completed:[],cur:null,step:0,answered:false,steps:[]};
 function loadS(){try{const d=localStorage.getItem(STORE);if(d)Object.assign(S,JSON.parse(d))}catch(e){}}
@@ -562,10 +618,14 @@ function renderMap(){
     const chs=CHAPTERS.filter(c=>c.sec===sec.id);
     const ready=chs.filter(c=>c.conc);
     const doneN=chs.filter(c=>S.completed.includes(c.id)).length;
+    const ph=SEC_PHASES[sec.id]||{phase:'',sub:''};
     html+=`<div class="path-sec">
       <span class="path-sec-dot" style="background:${sec.color}"></span>
-      <span class="path-sec-name">${sec.name}</span>
-      <span class="path-sec-cnt">${ready.length?doneN+'/'+chs.length:sec.sub}</span>
+      <div class="path-sec-mid">
+        <div class="path-sec-name">${sec.name}</div>
+        <div class="path-sec-phase" style="color:${sec.color};opacity:.75">${ph.phase} · ${ph.sub}</div>
+      </div>
+      <span class="path-sec-cnt">${ready.length?doneN+'/'+chs.length:''}</span>
     </div>`;
     if(ready.length===0){
       html+=`<div class="soon">🔜 ${sec.name} · 敬请期待</div>`;
@@ -593,6 +653,7 @@ function renderMap(){
 // ══════════════════════════════════════════════
 function buildSteps(ch){
   const st=[];
+  if(ch.ancient) st.push({t:'ancient'});
   if(ch.hook) st.push({t:'hook'});
   if(ch.prob) st.push({t:'prob'});
   if(ch.conc) st.push({t:'conc'});
@@ -624,7 +685,15 @@ function renderStep(ch,n){
   const st=steps[n];
   const quizCount=ch.quiz?ch.quiz.length:0;
 
-  if(st.t==='hook'){
+  if(st.t==='ancient'){
+    sc.innerHTML=`<div class="ancient-card">
+      <span class="stag ancient">📜 账房先生 · 初见记</span>
+      <div class="ancient-body">${ch.ancient}</div>
+      <div class="ancient-divider"><span>古今对照</span></div>
+    </div>`;
+    sa.innerHTML=`<button class="sbtn bc" onclick="nextStep()">看现代人怎么说 →</button>`;
+  }
+  else if(st.t==='hook'){
     sc.innerHTML=`<div class="scard">
       <span class="stag hook">🎬 生活里的事</span>
       <span class="sbig">${ch.emoji}</span>
@@ -1001,6 +1070,7 @@ function confetti(){
 loadS();
 renderMap();
 keeperGreet();
+maybePrologue();
 </script>
 </body>
 </html>
