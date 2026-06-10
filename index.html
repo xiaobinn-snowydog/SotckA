@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>从零搞懂A股 · 闯关</title>
+<title>从零搞懂A股 · 黄昏驿站</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
   --bg:#1b1822;--card:rgba(255,255,255,.045);--card2:rgba(255,255,255,.06);
-  --gold:#E9A949;--gold2:#F0BE6B;
+  --gold:#E9A949;--gold2:#F0BE6B;--dusk:#E98C49;
   --text:#ECE7DE;--muted:#9C968C;--locked:rgba(255,255,255,.05);
   --green:#7FB58A;--red:#C98B6B;--blue:#7C8A93;--purple:#9c8bd0;
   --line:rgba(255,255,255,.08);
@@ -18,7 +18,9 @@
 html,body{height:100%;color:var(--text);
   font-family:-apple-system,"PingFang SC","Hiragino Sans GB",sans-serif;
   font-size:15px;overflow:hidden;-webkit-font-smoothing:antialiased}
-body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #14121a 100%) fixed,#14121a}
+body{background:
+  radial-gradient(120% 62% at 50% -16%, rgba(233,140,73,.20) 0%, rgba(186,96,84,.10) 34%, transparent 62%),
+  radial-gradient(125% 80% at 50% -10%, #2d2434 0%, #211a2b 40%, #14111c 100%) fixed,#14111c}
 .view{position:fixed;top:0;left:0;right:0;bottom:var(--nav-h);
   overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .hidden{display:none!important}
@@ -48,9 +50,22 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
 
 /* map */
 #map-wrap{padding:8px 16px 28px;max-width:480px;margin:0 auto}
-.map-ttl{text-align:center;padding:22px 0 8px;font-size:25px;font-weight:750;color:var(--gold);letter-spacing:.5px}
+.map-brand{text-align:center;font-size:11px;letter-spacing:2.5px;color:var(--muted);padding-top:20px}
+.map-brand b{color:var(--dusk);font-weight:600}
+.map-ttl{text-align:center;padding:10px 0 8px;font-size:25px;font-weight:750;color:var(--gold);letter-spacing:.5px}
 .map-sub{text-align:center;color:var(--text);font-size:13.5px;margin-bottom:6px;opacity:.85}
-.map-tip{text-align:center;color:var(--muted);font-size:11.5px;margin-bottom:26px;letter-spacing:.3px}
+.map-tip{text-align:center;color:var(--muted);font-size:11.5px;margin-bottom:18px;letter-spacing:.3px}
+/* 守站人：账房先生 */
+.keeper-card{display:flex;gap:12px;align-items:flex-start;margin:0 2px 26px;padding:14px 16px;
+  background:linear-gradient(135deg,rgba(233,169,73,.10),rgba(255,255,255,.03));
+  border:1px solid rgba(233,169,73,.28);border-radius:18px}
+.keeper-ava{width:46px;height:46px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:23px;
+  background:radial-gradient(circle at 32% 28%,#F0BE6B,#b97a2e);box-shadow:0 4px 14px -6px var(--gold)}
+.keeper-name{font-size:13.5px;font-weight:700;color:var(--gold)}
+.keeper-role{font-size:10px;color:var(--muted);font-weight:500;margin-left:6px;letter-spacing:.5px}
+.keeper-line{font-size:13px;color:#D7D1C7;line-height:1.75;margin-top:4px}
+.station-foot{text-align:center;color:var(--muted);font-size:11.5px;line-height:1.95;padding:28px 0 6px;letter-spacing:.4px}
+.station-foot span{color:rgba(233,169,73,.78);letter-spacing:1.5px}
 /* 闯关路径 */
 .path-sec{display:flex;align-items:center;gap:10px;margin:30px 4px 20px;
   padding-top:6px;border-top:1px solid var(--line)}
@@ -237,10 +252,19 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
 <!-- MAP -->
 <div id="view-map" class="view">
   <div id="map-wrap">
+    <div class="map-brand">🌇 <b>黄昏驿站</b> · 钱包战场</div>
     <div class="map-ttl">📈 从零搞懂A股</div>
     <div class="map-sub">没人教过、但你该懂的投资课</div>
     <div class="map-tip">大白话 · 费曼学习法 · 一关5分钟</div>
+    <div class="keeper-card">
+      <div class="keeper-ava">🧮</div>
+      <div>
+        <div class="keeper-name">账房先生<span class="keeper-role">驿站守站人</span></div>
+        <div class="keeper-line" id="keeper-line"></div>
+      </div>
+    </div>
     <div id="sec-list"></div>
+    <div class="station-foot">驿站是中转，不是终点。<br>在这里把账看明白，然后继续上路。<br><span>不荐股 · 不预测 · 只教框架</span></div>
   </div>
 </div>
 
@@ -262,11 +286,11 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
 
 <!-- TOOLBOX -->
 <div id="view-tool" class="view hidden">
-  <div class="hdr"><span style="color:var(--gold);font-size:18px;font-weight:800">复利计算器</span></div>
+  <div class="hdr"><span style="color:var(--gold);font-size:18px;font-weight:800">🧮 账房的算盘</span></div>
   <div id="tool-wrap">
     <div class="intro"><span class="intro-em">⛄</span>
       <strong style="display:block;margin-bottom:6px;font-size:15px">定投复利：滚雪球</strong>
-      <p style="font-size:13px;color:var(--muted);line-height:1.7">每个月坚持投一笔钱，让时间和复利帮你滚雪球。算算看，多年后你能攒下多少。</p>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7">账房先生：我不替你预测收益，这把算盘只是把「利滚利」一颗一颗摆给你看。每个月投一笔，看看时间能帮你滚多大。</p>
     </div>
     <div class="fgrp"><label class="flbl">每月投入（元）</label>
       <input class="finp" type="number" id="iv-m" value="1000"></div>
@@ -291,7 +315,7 @@ body{background:radial-gradient(125% 80% at 50% -10%, #2b2735 0%, #1f1b28 40%, #
   <button class="nbtn on" id="nb-map" onclick="showView('map')">
     <span class="ic"><svg viewBox="0 0 24 24"><path d="M5 21V4c3-1.4 5 1.4 8 0s5-1.4 7 0v9c-2 1.4-5-1.4-7 0s-5 1.4-8 0"/></svg></span><span>闯关</span></button>
   <button class="nbtn" id="nb-tool" onclick="showView('tool')">
-    <span class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="12" x2="9.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="9" y1="16" x2="9.01" y2="16"/><line x1="12" y1="16" x2="12.01" y2="16"/><line x1="15" y1="16" x2="15.01" y2="16"/></svg></span><span>计算器</span></button>
+    <span class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="12" x2="9.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="9" y1="16" x2="9.01" y2="16"/><line x1="12" y1="16" x2="12.01" y2="16"/><line x1="15" y1="16" x2="15.01" y2="16"/></svg></span><span>算盘</span></button>
   <button class="nbtn" id="nb-progress" onclick="showView('progress')">
     <span class="ic"><svg viewBox="0 0 24 24"><line x1="6" y1="20" x2="6" y2="13"/><line x1="12" y1="20" x2="12" y2="7"/><line x1="18" y1="20" x2="18" y2="10"/></svg></span><span>进度</span></button>
 </nav>
@@ -492,6 +516,19 @@ function mkMatrix({cells,rowLabel,colLabel}){
 // 状态
 // ══════════════════════════════════════════════
 const STORE='azhul_a_stock_v1';
+
+// 守站人语录：账房先生只把账摆给你看，不替你下注
+const KEEPER_LINES=[
+  '我不替你下注，只陪你把账算清楚。规则看懂了，路你自己走。',
+  '分期免息、先用后付？我拨一拨算盘，利滚利就藏在里面。把戏没变新，只是更难看见了。',
+  '看懂规则，比听消息值钱。今天先对一笔账。',
+  '黄昏了，停一停。看清你在哪里，再决定往哪走。',
+  '账要自己看明白，答案也得是你自己的。我只管把算盘摆正。'
+];
+function keeperGreet(){
+  const el=document.getElementById('keeper-line');
+  if(el) el.textContent=KEEPER_LINES[new Date().getDate()%KEEPER_LINES.length];
+}
 let S={unlocked:[1],completed:[],cur:null,step:0,answered:false,steps:[]};
 function loadS(){try{const d=localStorage.getItem(STORE);if(d)Object.assign(S,JSON.parse(d))}catch(e){}}
 function saveS(){try{localStorage.setItem(STORE,JSON.stringify({unlocked:S.unlocked,completed:S.completed}))}catch(e){}}
@@ -678,7 +715,7 @@ function renderStep(ch,n){
   }
   else if(st.t==='gold'){
     sc.innerHTML=`<div class="scard gold-card">
-      <span class="stag goldtag">🔑 记住一句就够</span>
+      <span class="stag goldtag">🧮 账房先生 · 记一笔就够</span>
       <div class="gold-line">${ch.gold}</div>
     </div>`;
     sa.innerHTML=`<button class="sbtn bg" onclick="unlockNext()">完成这一关 →</button>`;
@@ -707,7 +744,7 @@ function checkAns(chosen){
   const fb=document.getElementById('qfb');
   const right=chosen===cor;
   fb.className='qfb '+(right?'ok':'no');
-  fb.innerHTML=right?`<strong>✓ 对了。</strong> ${q.ex}`:`<strong>差一点。</strong> ${q.ex}`;
+  fb.innerHTML=right?`<strong>✓ 账对上了。</strong> ${q.ex}`:`<strong>这笔账差一点。</strong> ${q.ex}`;
   fb.classList.remove('hidden');
   if(right){
     document.getElementById('next-btn').classList.remove('hidden');
@@ -721,13 +758,13 @@ function unlockNext(){
   const nxt=id+1;
   const nextCh=CHAPTERS.find(c=>c.id===nxt);
   if(nextCh && nextCh.conc){
-    if(!S.unlocked.includes(nxt)){ S.unlocked.push(nxt); toast('🔓 第'+nxt+'关已解锁！'); }
-    else toast('✅ 本关已完成！');
+    if(!S.unlocked.includes(nxt)){ S.unlocked.push(nxt); toast('🏮 第'+nxt+'关已解锁，继续赶路！'); }
+    else toast('✅ 这笔账已经对清了！');
   }else if(nextCh){
     if(!S.unlocked.includes(nxt)) S.unlocked.push(nxt);
     toast('🎉 本篇暂时到这，后续关卡马上更新！');
   }else{
-    toast('🏆 太厉害了，全部通关！');
+    toast('🏮 全部通关。账已看清，路在你脚下。');
   }
   saveS();
   showView('map');
@@ -963,6 +1000,7 @@ function confetti(){
 // ══════════════════════════════════════════════
 loadS();
 renderMap();
+keeperGreet();
 </script>
 </body>
 </html>
