@@ -261,6 +261,43 @@ body{background:
 .rst-btn{width:100%;padding:12px;border-radius:12px;border:1px solid var(--red);
   background:transparent;color:var(--red);font-size:14px;cursor:pointer;margin-top:12px}
 
+/* 账本 view */
+#ledger-wrap{padding:16px;max-width:480px;margin:0 auto}
+.ledger-top{text-align:center;padding:18px 0 22px}
+.ledger-top-sub{font-size:12.5px;color:var(--muted);line-height:1.85;margin-top:6px}
+.ls{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 16px;margin-bottom:12px}
+.ls.todo{border-color:rgba(233,169,73,.4);background:linear-gradient(135deg,rgba(233,169,73,.07),transparent)}
+.ls.done{border-color:rgba(127,181,138,.38);background:rgba(127,181,138,.035)}
+.ls-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ls-dot{width:8px;height:8px;border-radius:50%;flex:none}
+.ls-name{font-size:14px;font-weight:700}
+.ls-st{margin-left:auto;font-size:11px;color:var(--muted);white-space:nowrap}
+.ls-principle{font-size:14px;color:#E0D8CC;line-height:1.9;border-left:2.5px solid var(--gold);padding-left:13px;margin-bottom:10px}
+.ls-prompt{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:12px}
+.ls-btn{padding:10px 20px;border-radius:12px;border:none;background:var(--gold);color:#231c0c;font-size:13px;font-weight:700;cursor:pointer}
+.ls-edit{padding:6px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:11.5px;cursor:pointer}
+.ls-meta{display:flex;align-items:center;gap:10px;margin-top:2px}
+.ls-date{font-size:11px;color:var(--muted)}
+.ls-lock{opacity:.38;font-size:12.5px;color:var(--muted);padding:4px 0}
+
+/* 篇末复盘 view */
+#view-reflect{background:var(--bg)}
+#ref-wrap{padding:22px 16px 32px;max-width:480px;margin:0 auto}
+.ref-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(127,181,138,.12);
+  border:1px solid rgba(127,181,138,.32);border-radius:20px;padding:5px 14px;
+  font-size:11.5px;color:#9fcbb4;margin-bottom:22px;letter-spacing:.4px}
+.ref-sec{font-size:21px;font-weight:800;color:var(--gold);margin-bottom:14px;line-height:1.35}
+.ref-q{font-size:14.5px;color:#D7D1C7;line-height:1.95;margin-bottom:20px}
+.ref-ta{width:100%;min-height:140px;background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(233,169,73,.28);border-radius:14px;padding:14px;
+  color:var(--text);font-size:14px;font-family:inherit;line-height:1.85;outline:none;resize:vertical;
+  transition:border-color .2s var(--ease)}
+.ref-ta:focus{border-color:var(--gold)}
+.ref-ta::placeholder{color:var(--muted);font-size:13px}
+.ref-skip{display:block;text-align:center;margin-top:14px;font-size:13px;color:var(--muted);
+  cursor:pointer;padding:8px;letter-spacing:.3px}
+.ledger-sum{text-align:center;padding:22px 0 8px;font-size:12px;color:var(--muted);line-height:1.9}
+
 /* toast + confetti */
 #toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-90px);
   background:var(--card);border-radius:20px;padding:10px 20px;font-size:15px;
@@ -350,11 +387,35 @@ body{background:
   <div id="prog-wrap"></div>
 </div>
 
+<!-- REFLECT 篇末复盘 -->
+<div id="view-reflect" class="view hidden">
+  <div class="hdr">
+    <button class="back-btn" onclick="skipReflect()">←</button>
+    <span class="hdr-title" id="ref-hdr-title"></span>
+  </div>
+  <div id="ref-wrap">
+    <div class="ref-badge">🧮 账房先生 · 篇末复盘</div>
+    <div class="ref-sec" id="ref-sec"></div>
+    <div class="ref-q" id="ref-q"></div>
+    <textarea class="ref-ta" id="ref-ta" rows="6" placeholder="用你自己的话写……不是课程里的答案，是你的。"></textarea>
+    <button class="sbtn" style="margin-top:16px" onclick="saveReflect()">存入账本 →</button>
+    <span class="ref-skip" onclick="skipReflect()">先跳过，稍后在账本里写</span>
+  </div>
+</div>
+
+<!-- LEDGER 我的账本 -->
+<div id="view-ledger" class="view hidden">
+  <div class="hdr"><span style="color:var(--gold);font-size:18px;font-weight:800">📒 我的账本</span></div>
+  <div id="ledger-wrap"></div>
+</div>
+
 <nav id="bnav">
   <button class="nbtn on" id="nb-map" onclick="showView('map')">
     <span class="ic"><svg viewBox="0 0 24 24"><path d="M5 21V4c3-1.4 5 1.4 8 0s5-1.4 7 0v9c-2 1.4-5-1.4-7 0s-5 1.4-8 0"/></svg></span><span>闯关</span></button>
   <button class="nbtn" id="nb-tool" onclick="showView('tool')">
     <span class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="12" x2="9.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="9" y1="16" x2="9.01" y2="16"/><line x1="12" y1="16" x2="12.01" y2="16"/><line x1="15" y1="16" x2="15.01" y2="16"/></svg></span><span>算盘</span></button>
+  <button class="nbtn" id="nb-ledger" onclick="showView('ledger')">
+    <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="12" y1="7" x2="16" y2="7"/><line x1="12" y1="11" x2="16" y2="11"/></svg></span><span>账本</span></button>
   <button class="nbtn" id="nb-progress" onclick="showView('progress')">
     <span class="ic"><svg viewBox="0 0 24 24"><line x1="6" y1="20" x2="6" y2="13"/><line x1="12" y1="20" x2="12" y2="7"/><line x1="18" y1="20" x2="18" y2="10"/></svg></span><span>进度</span></button>
 </nav>
@@ -585,23 +646,35 @@ function enterStation(){
 function maybePrologue(){
   try{if(localStorage.getItem('zos_prologue'))document.getElementById('prologue').classList.add('hidden');}catch(e){}
 }
-let S={unlocked:[1],completed:[],cur:null,step:0,answered:false,steps:[]};
-function loadS(){try{const d=localStorage.getItem(STORE);if(d)Object.assign(S,JSON.parse(d))}catch(e){}}
-function saveS(){try{localStorage.setItem(STORE,JSON.stringify({unlocked:S.unlocked,completed:S.completed}))}catch(e){}}
+let S={unlocked:[1],completed:[],reflected:[],cur:null,step:0,answered:false,steps:[]};
+function loadS(){
+  try{const d=localStorage.getItem(STORE);if(d){Object.assign(S,JSON.parse(d));if(!S.reflected)S.reflected=[];}}catch(e){}
+}
+function saveS(){
+  try{localStorage.setItem(STORE,JSON.stringify({unlocked:S.unlocked,completed:S.completed,reflected:S.reflected}))}catch(e){}
+}
+// 原则存取
+function savePrinciple(secId,text){
+  try{localStorage.setItem('zos_p_'+secId,JSON.stringify({text,date:Date.now()}))}catch(e){}
+}
+function loadPrinciple(secId){
+  try{const d=localStorage.getItem('zos_p_'+secId);return d?JSON.parse(d):null}catch(e){return null}
+}
 
 // ══════════════════════════════════════════════
 // 导航
 // ══════════════════════════════════════════════
 function showView(name){
-  ['map','chapter','tool','progress'].forEach(v=>{
+  ['map','chapter','tool','progress','reflect','ledger'].forEach(v=>{
     document.getElementById('view-'+v).classList.toggle('hidden',v!==name);
   });
-  ['map','tool','progress'].forEach(v=>{
+  ['map','tool','ledger','progress'].forEach(v=>{
     const b=document.getElementById('nb-'+v);
     if(b) b.classList.toggle('on',v===name);
   });
   if(name==='map') renderMap();
   if(name==='progress') renderProg();
+  if(name==='ledger') renderLedger();
   window.scrollTo(0,0);
 }
 
@@ -823,19 +896,30 @@ function checkAns(chosen){
 }
 function unlockNext(){
   const id=S.cur;
-  if(!S.completed.includes(id)) S.completed.push(id);
+  const wasCompleted=S.completed.includes(id);
+  if(!wasCompleted) S.completed.push(id);
+  // 解锁下一关（无论是否篇末）
   const nxt=id+1;
   const nextCh=CHAPTERS.find(c=>c.id===nxt);
-  if(nextCh && nextCh.conc){
-    if(!S.unlocked.includes(nxt)){ S.unlocked.push(nxt); toast('🏮 第'+nxt+'关已解锁，继续赶路！'); }
-    else toast('✅ 这笔账已经对清了！');
-  }else if(nextCh){
-    if(!S.unlocked.includes(nxt)) S.unlocked.push(nxt);
-    toast('🎉 本篇暂时到这，后续关卡马上更新！');
-  }else{
-    toast('🏮 全部通关。账已看清，路在你脚下。');
-  }
+  if(nextCh && !S.unlocked.includes(nxt)) S.unlocked.push(nxt);
   saveS();
+  // 检测是否刚刚完成了一整篇（首次）
+  if(!wasCompleted){
+    const ch=CHAPTERS.find(c=>c.id===id);
+    if(ch){
+      const secId=ch.sec;
+      const secChs=CHAPTERS.filter(c=>c.sec===secId&&c.conc);
+      const sectionDone=secChs.every(c=>S.completed.includes(c.id));
+      if(sectionDone&&!S.reflected.includes(secId)){
+        showReflect(secId);
+        return;
+      }
+    }
+  }
+  // 普通完成提示
+  if(nextCh&&nextCh.conc&&!wasCompleted) toast('🏮 第'+nxt+'关已解锁，继续赶路！');
+  else if(!nextCh) toast('🏮 全部通关。账已看清，路在你脚下。');
+  else toast('✅ 这笔账已经对清了！');
   showView('map');
 }
 
@@ -1067,6 +1151,111 @@ function confetti(){
 // ══════════════════════════════════════════════
 // 启动
 // ══════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// 篇末复盘 + 我的账本
+// ══════════════════════════════════════════════
+const SECTION_REFLECTIONS={
+  1:{sec:'篇1 · 金钱常识',q:'这篇讲的是大多数人从来没被教过的金钱规则。<br><br>在你自己的账里，有没有一个「以为没亏、其实一直在亏」的地方？用一句话写下来。',ph:'比如：我一直把钱放活期，以为安全，其实每年跑不赢通胀……'},
+  2:{sec:'篇2 · A股脾气',q:'这个市场和你以为的不一样。<br><br>如果让你现在立一条「我在A股里的纪律」，你会写什么？哪怕只有一句。',ph:'比如：我不追涨，不抄底，不买我看不懂的……'},
+  3:{sec:'篇3 · 大环境',q:'宏观环境最容易带着普通人做出错误决定。<br><br>你自己最容易被哪种信号带跑？',ph:'比如：听说要降息就想买，看到新闻说某行业要涨就冲进去……'},
+  4:{sec:'篇4 · 看公司',q:'以后你看一家公司，会先问哪几个问题？<br><br>用自己的话写——不是课程框架，是你真正会去查的那几件事。',ph:'比如：这家公司靠什么赚钱？老板靠不靠谱？现在贵不贵？……'},
+  5:{sec:'篇5 · 适合你的机会',q:'写下你自己的禁区清单。<br><br>不是课程里那条通用的，是你的——结合你的性格、资金量和过去的教训。',ph:'比如：不碰我看不懂的，不用我不能承受损失的钱，不听朋友推荐……'},
+  6:{sec:'篇6 · 战胜自己',q:'投资里最难打败的对手是自己。<br><br>你在投资里最难控制的那个冲动是什么？下次它出现时，你打算怎么做？',ph:'比如：我一看到别人赚了就着急，我打算下次强制等三天再决定……'},
+};
+
+let _reflectSec=null;
+
+function showReflect(secId){
+  _reflectSec=secId;
+  const r=SECTION_REFLECTIONS[secId];
+  const sec=SECTIONS.find(s=>s.id===secId);
+  document.getElementById('ref-hdr-title').textContent=sec?sec.name:'';
+  document.getElementById('ref-sec').textContent=(r?r.sec:'');
+  document.getElementById('ref-q').innerHTML=(r?r.q:'');
+  const ta=document.getElementById('ref-ta');
+  ta.placeholder=r?r.ph:'';
+  const prev=loadPrinciple(secId);
+  ta.value=prev?prev.text:'';
+  showView('reflect');
+}
+function saveReflect(){
+  const text=document.getElementById('ref-ta').value.trim();
+  if(text&&_reflectSec){
+    savePrinciple(_reflectSec,text);
+    if(!S.reflected.includes(_reflectSec)) S.reflected.push(_reflectSec);
+    saveS();
+    toast('📒 原则已存入账本');
+  } else if(_reflectSec){
+    if(!S.reflected.includes(_reflectSec)) S.reflected.push(_reflectSec);
+    saveS();
+  }
+  showView('map');
+}
+function skipReflect(){
+  if(_reflectSec&&!S.reflected.includes(_reflectSec)){
+    S.reflected.push(_reflectSec); saveS();
+  }
+  showView('map');
+}
+
+function renderLedger(){
+  const wrap=document.getElementById('ledger-wrap');
+  const writtenCount=SECTIONS.filter(s=>loadPrinciple(s.id)).length;
+  let html=`<div class="ledger-top">
+    <div style="font-size:13px;color:var(--muted);line-height:1.9" class="ledger-top-sub">
+      六篇各写一条原则，才算真的建了框架。<br>
+      <span style="color:rgba(233,169,73,.7)">账房先生：这里的答案，是你的，不是我的。</span>
+    </div>
+  </div>`;
+  SECTIONS.forEach(sec=>{
+    const secChs=CHAPTERS.filter(c=>c.sec===sec.id&&c.conc);
+    const doneN=secChs.filter(c=>S.completed.includes(c.id)).length;
+    const total=secChs.length;
+    const secDone=total>0&&doneN===total;
+    const principle=loadPrinciple(sec.id);
+    const phase=SEC_PHASES[sec.id]||{phase:''};
+    const r=SECTION_REFLECTIONS[sec.id];
+
+    if(doneN===0){
+      html+=`<div class="ls"><div class="ls-top">
+        <span class="ls-dot" style="background:${sec.color};opacity:.35"></span>
+        <span class="ls-name" style="opacity:.45">${sec.emoji} ${sec.name}</span>
+        <span class="ls-st">未开始</span></div>
+        <div class="ls-lock">先完成关卡，再写原则</div></div>`;
+    } else if(!secDone){
+      html+=`<div class="ls"><div class="ls-top">
+        <span class="ls-dot" style="background:${sec.color}"></span>
+        <span class="ls-name">${sec.emoji} ${sec.name}</span>
+        <span class="ls-st">${doneN}/${total} 关</span></div>
+        <div style="font-size:12.5px;color:var(--muted)">本篇完成后可写原则</div></div>`;
+    } else if(!principle){
+      html+=`<div class="ls todo"><div class="ls-top">
+        <span class="ls-dot" style="background:${sec.color}"></span>
+        <span class="ls-name">${sec.emoji} ${sec.name}</span>
+        <span class="ls-st" style="color:var(--gold)">待写原则</span></div>
+        <div class="ls-prompt">${r?(r.q.replace(/<br><br>/g,'\n').split('\n').pop()||''):''}</div>
+        <button class="ls-btn" onclick="showReflect(${sec.id})">写下我的原则 →</button></div>`;
+    } else {
+      const d=new Date(principle.date);
+      const ds=`${d.getMonth()+1}月${d.getDate()}日`;
+      html+=`<div class="ls done"><div class="ls-top">
+        <span class="ls-dot" style="background:${sec.color}"></span>
+        <span class="ls-name">${sec.emoji} ${sec.name}</span>
+        <span class="ls-st" style="color:var(--green)">✓ 已写</span></div>
+        <div class="ls-principle">${principle.text}</div>
+        <div class="ls-meta">
+          <span class="ls-date">写于 ${ds}</span>
+          <button class="ls-edit" onclick="showReflect(${sec.id})">改一改</button>
+        </div></div>`;
+    }
+  });
+  if(writtenCount>0){
+    html+=`<div class="ledger-sum">已写 <strong style="color:var(--gold)">${writtenCount}</strong> / 6 条原则<br>
+      <span style="opacity:.55">账本是用来对照自己行为的，不是用来展示的。</span></div>`;
+  }
+  wrap.innerHTML=html;
+}
+
 loadS();
 renderMap();
 keeperGreet();
